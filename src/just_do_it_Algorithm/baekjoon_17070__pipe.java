@@ -11,30 +11,30 @@ public class baekjoon_17070__pipe {
 		if (r2 >= N || c2 >= N) {
 			return;
 		}
-		if (state == 1 && house[r2][c2] == 1)
-			return;
-		if (state == 2 && house[r2][c2] == 1)
-			return;
-		if (state == 3 && (house[r2][c2] == 1 || house[r2 - 1][c2] == 1 || house[r2][c2 - 1] == 1))
-			return;
-		if (r2 == N - 1 && c2 == N - 1) {
-			answer++;
-			return;
-		}
 		switch (state) {
 		case 1:
+			if (house[r2][c2] == 1)
+				return;
 			dfs(1, r1, c1 + 1, r2, c2 + 1);
 			dfs(3, r1, c1 + 1, r2 + 1, c2 + 1);
 			break;
 		case 2:
+			if (house[r2][c2] == 1)
+				return;
 			dfs(2, r1 + 1, c1, r2 + 1, c2);
 			dfs(3, r1 + 1, c1, r2 + 1, c2 + 1);
 			break;
 		case 3:
+			if (house[r2][c2] == 1 || house[r2 - 1][c2] == 1 || house[r2][c2 - 1] == 1)
+				return;
 			dfs(1, r1 + 1, c1 + 1, r2, c2 + 1);
 			dfs(2, r1 + 1, c1 + 1, r2 + 1, c2);
 			dfs(3, r1 + 1, c1 + 1, r2 + 1, c2 + 1);
 			break;
+		}
+		if (r2 == N - 1 && c2 == N - 1) {
+			answer++;
+			return;
 		}
 	}
 
@@ -52,8 +52,6 @@ public class baekjoon_17070__pipe {
 				house[i][j] = sc.nextInt();
 			}
 		}
-		
-		sc.close();
 
 		/*
 		 * state 1 : 가로 / 2 : 세로 / 3 : 대각선
