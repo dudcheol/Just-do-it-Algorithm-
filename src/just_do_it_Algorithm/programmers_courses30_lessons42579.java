@@ -93,7 +93,7 @@ public class programmers_courses30_lessons42579 {
 					for(int idNum : idNums)System.out.print(idNum+" ");
 					System.out.println();
 					
-					// 두 곡만 수록한다
+					// 두 곡만 수록한다. 한 곡만 있으면 한곡만 수록한다.
 					int answerSize = idNums.length < 2 ? 1 : 2;
 					for(int m=0;m<answerSize;m++) {
 						answerList.add(idNums[m]);
