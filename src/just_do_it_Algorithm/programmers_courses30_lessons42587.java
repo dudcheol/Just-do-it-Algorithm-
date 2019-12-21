@@ -1,7 +1,8 @@
 package just_do_it_Algorithm;
 
 import java.util.*;
-/* 5:00 ~
+/* 1차 틀림 5:00 ~ 7:15
+ * 2차 정답 7:16 ~ 8:02
  *  1. 인쇄 대기목록의 가장 앞에 있는 문서(J)를 대기목록에서 꺼냅니다.
 	2. 나머지 인쇄 대기목록에서 J보다 중요도가 높은 문서가 한 개라도 존재하면 J를 대기목록의 가장 마지막에 넣습니다.
 	3. 그렇지 않으면 J를 인쇄합니다.
@@ -28,34 +29,17 @@ public class programmers_courses30_lessons42587 {
 			this.priority = p;
 			this.location = l;
 		}
-	}
 
-	static class DocPriorityComparator implements Comparator<Doc> {
-		@Override
-		public int compare(Doc o1, Doc o2) {
-			if (o1.priority > o2.priority) {
-				return -1;
-			} else {
-				return 1;
-			}
-		}
-	}
-
-	static class DocLocationComparator implements Comparator<Doc> {
-		@Override
-		public int compare(Doc o1, Doc o2) {
-			if (o1.location > o2.location) {
-				return 1;
-			} else {
-				return -1;
-			}
+		boolean compareP(Doc o2) {
+			if (this.priority < o2.priority) {
+				return true;
+			} else
+				return false;
 		}
 	}
 
 	static int solution(int[] priorities, int location) {
 		LinkedList<Doc> q = new LinkedList<>();
-		LinkedList<Doc> sq = new LinkedList<>();
-		Doc myDoc = new Doc(priorities[location], location);
 		int answer = 0;
 
 		// 큐에 문서 삽입
@@ -63,41 +47,24 @@ public class programmers_courses30_lessons42587 {
 			q.offer(new Doc(priorities[i], i));
 		}
 
-		// 큐에 있는 문서들을 우선순위로 정렬
-		q.sort(new DocPriorityComparator());
-
-		// 정렬된 큐에서 내 문서보다 우선순위가 높은 문서들을 출력(poll)하고
-		// 출력된 문서보다 location이 낮았던 문서들의 location은 맨뒤로 (location += 큐의 크기+1)보냄
-		while (!(q.peek().priority == myDoc.priority)) {
-			Doc polled = q.poll();
-			for (Doc d : q) {
-				if (d.location < polled.location) {
-					d.location += (q.size() + 1); 
-				}
-			}
-			if(myDoc.location < polled.location) myDoc.location += (q.size() + 1);
-			answer++;
-		}
-
-		// 내 문서와 우선순위가 같은 문서들만 sq에 넣음
+		// 인쇄 대기목록의 가장 앞에 있는 문서(J)를 대기목록에서 꺼냅니다.
 		while (!q.isEmpty()) {
-			if (q.peek().priority == myDoc.priority) {
-				sq.offer(q.poll());
-			} else
-				break;
-		}
-
-		// sq에 있는 문서들을 location을 기준으로 오름차순 정렬
-		sq.sort(new DocLocationComparator());
-	
-		// 내 문서가 몇번째인지 구한다
-		while (!sq.isEmpty()) {
-			if (sq.peek().location == myDoc.location) {
-				answer++;
-				break;
-			} else {
-				sq.poll();
-				answer++;
+			Doc polled = q.poll();
+			answer++;
+			for (int i = 0; i < q.size(); i++) {
+				// 큐에남아있는 문서들 중 큐에서 꺼낸 문서보다 우선순위가 높은 문서가 있다면
+				// 꺼낸 문서를 다시 큐에 집어넣음
+				if (polled.compareP(q.get(i))) {
+					q.offer(polled);
+					answer--;
+					break;
+				} else {
+					// 꺼낸 문서가 나의 문서이고
+					// 꺼낸 문서보다 우선순위가 큰 문서가 한번도 없었다면 큐를 모두 비운다
+					if(i==q.size()-1 && polled.location == location) {
+						q.clear();
+					}
+				}
 			}
 		}
 
@@ -105,8 +72,8 @@ public class programmers_courses30_lessons42587 {
 	}
 
 	public static void main(String[] args) {
-		int[] priorities = { 1, 2, 3, 4, 1, 1, 1, 2, 2, 5};
-		int location  = 5;
+		int[] priorities = { 1, 1, 9, 1, 1, 1 };
+		int location = 0;
 
 		System.out.println("----------");
 		System.out.println(solution(priorities, location));
