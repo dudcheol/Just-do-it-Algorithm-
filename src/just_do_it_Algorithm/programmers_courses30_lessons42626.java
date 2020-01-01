@@ -14,6 +14,7 @@ import java.util.*;
 public class programmers_courses30_lessons42626 {
 	static int solution(int[] scoville, int K) {
         int answer = 0;
+        int cntK = 0;
         ArrayList<Integer> scovList = new ArrayList<>();
         
         // 가장 맵지 않은 순서로 정렬
@@ -22,10 +23,16 @@ public class programmers_courses30_lessons42626 {
         // 리스트로 만듬
         for(int scov : scoville) {
         	scovList.add(scov);
+        	if(scov < K) {
+        		cntK++;
+        	}
         }
         
         while(true) {
+        	if(cntK==0) return -1;
+        	if(scovList.size()<2) return -1;
 			Collections.sort(scovList);
+			if(scovList.get(0)>=K) break;
         	int resultScov = scovList.get(0) + scovList.get(1)*2;
         	answer++;
         	scovList.remove(0);
