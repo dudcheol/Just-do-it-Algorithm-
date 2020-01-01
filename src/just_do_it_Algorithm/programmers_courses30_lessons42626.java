@@ -13,47 +13,45 @@ import java.util.*;
 
 public class programmers_courses30_lessons42626 {
 	static int solution(int[] scoville, int K) {
-        int answer = 0;
-        int cntK = 0;
-        ArrayList<Integer> scovList = new ArrayList<>();
-        
-        // 가장 맵지 않은 순서로 정렬
-        int size = scoville.length;
-        
-        // 리스트로 만듬
-        for(int scov : scoville) {
-        	scovList.add(scov);
-        	if(scov < K) {
-        		cntK++;
-        	}
-        }
-        
-        while(true) {
-        	if(cntK==0) return -1;
-        	if(scovList.size()<2) return -1;
-			Collections.sort(scovList);
-			if(scovList.get(0)>=K) break;
-        	int resultScov = scovList.get(0) + scovList.get(1)*2;
-        	answer++;
-        	scovList.remove(0);
-        	scovList.remove(0);
-        	scovList.add(0, resultScov);
-        	if(resultScov < K) {
-        		continue;
-        	} else {
-        		if(scovList.get(1) < K) {
-        			continue;
-        		} else break;
-        	}
-        }
-        
-        return answer;
-    }
-	
+		int answer = 0;
+		int overCnt = 0;
+		int mix = 0;
+
+		PriorityQueue<Integer> pQ = new PriorityQueue<>(scoville.length, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				if (o1 >= o2)
+					return 1;
+				else
+					return -1;
+			}
+		});
+
+		for (int sc : scoville) {
+			pQ.offer(sc);
+		}
+
+		while (!pQ.isEmpty()) {
+			int polledQ = pQ.poll();
+			if (polledQ < K) {
+				if(pQ.isEmpty()) continue;
+				answer++;
+				mix = polledQ + pQ.poll() * 2;
+				pQ.offer(mix);
+			} else {
+				overCnt++;
+			}
+		}
+
+		if(overCnt==scoville.length) return 0;
+		if(mix < K) return -1;
+		return answer==0 ? -1 : answer;
+	}
+
 	public static void main(String[] args) {
-		int[] scoville = {1, 2, 3, 9, 10, 12};
+		int[] scoville = { 1, 2 };
 		int K = 7;
-		
+
 		System.out.println(solution(scoville, K));
 	}
 }
