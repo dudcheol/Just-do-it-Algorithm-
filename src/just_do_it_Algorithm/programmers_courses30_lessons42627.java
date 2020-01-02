@@ -3,7 +3,7 @@ package just_do_it_Algorithm;
 import java.util.*;
 
 /*
- * 11:00 시작!
+ * 23:00 시작! -> 1:10 못풀었음
  * 디스크문제
  * 작업의 요청부터 종료까지 걸린 시간의 평균을 가장 줄이는 방법으로 처리하면 평균이 얼마가 되는지 return 하도록 solution 함수를 작성해주세요. (단, 소수점 이하의 수는 버립니다)
  * 
@@ -105,7 +105,7 @@ public class programmers_courses30_lessons42627 {
 	}
 
 	public static void main(String[] args) {
-		int[][] jobs = { { 0, 3 }, { 1, 2 }, { 2, 6 } };
+		int[][] jobs = { { 0, 3 }, { 2, 5 }, { 2, 6 } };
 		System.out.println(solution(jobs));
 	}
 }
