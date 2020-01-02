@@ -8,6 +8,7 @@ package just_do_it_Algorithm;
 
 public class programmers_courses30_lessons43162 {
 	static int answer = 0;
+	static int[] visitedC;
 
 	static class Computer {
 		int name;
@@ -26,24 +27,34 @@ public class programmers_courses30_lessons43162 {
 	}
 
 	static void dfs(Computer c, int[][] computers) {
+		int myName = c.name;
+		int[] myLink = c.link;
 		if (c.isCountable == true) {
 			answer++;
 		}
-		int myName = c.name;
-		int[] myLink = c.link;
 		for (int i = 0; i < myLink.length; i++) {
-			if (i == myName || myLink[i] == 0)
-				continue; // 자기 자신은 항상 1이므로 제외, 0이면 연결안된 것이므로 제외
-			Computer lc = new Computer(myLink[i], computers[i]);
+			if (myLink[i] == 0 || visitedC[i] == 1)
+				continue; // 0이면 연결안된 것이므로 제외, visitedC가 1이면 이미 방문했던 것이므로 제외
+			if (i == myName) {
+				continue;
+			}
+			visitedC[i] = 1;// 연결됐는지 확인해본 컴퓨터임을 알림
+			Computer lc = new Computer(i, computers[i]);
 			lc.isNotCountable(); // 동일한 네트워크 이므로 세면 안됨
 			dfs(lc, computers);
 		}
 	}
 
 	static int solution(int n, int[][] computers) {
+		visitedC = new int[n];
+
+		if (n == 1)
+			return 1;
 
 		// 모든 컴퓨터를 조회
 		for (int i = 0; i < computers.length; i++) {
+			if (visitedC[i] == 1)
+				continue;
 			dfs(new Computer(i, computers[i]), computers);
 		}
 
@@ -51,8 +62,11 @@ public class programmers_courses30_lessons43162 {
 	}
 
 	public static void main(String[] args) {
-		int n = 3;
-		int[][] computers = { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 0, 1 } };
+		int n = 4;
+//		int[][] computers = { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 0, 1 } };
+//		int[][] computers = { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 1 } };
+		int[][] computers = { { 1, 0, 0, 1 }, { 0, 1, 1, 1 }, {0, 1, 1, 0 }, { 1, 1, 0, 1 } };
+//		int[][] computers = {{1,1},{1,1}};
 		// return 2
 		System.out.println(solution(n, computers));
 	}
