@@ -1,7 +1,7 @@
 package just_do_it_Algorithm;
 
 /*
- * 16:15 시작
+ * 16:15 시작 ~ 18:00
  * 컴퓨터의 개수 n, 연결에 대한 정보가 담긴 2차원 배열 computers
  * 네트워크의 개수를 return
  */
