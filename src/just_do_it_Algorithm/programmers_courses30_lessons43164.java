@@ -17,7 +17,7 @@ import java.util.*;
 public class programmers_courses30_lessons43164 {
 	static Ticket[] Ts;
 	static ArrayList<String> answerL;
-	
+
 	static class Ticket {
 		String start;
 		String dest;
@@ -30,20 +30,22 @@ public class programmers_courses30_lessons43164 {
 			this.visited = false;
 			this.next = new ArrayList<>();
 		}
-		
+
 		void setNext(Ticket t) {
 			this.next.add(t);
 		}
 	}
 
 	static void dfs(Ticket now) {
-		if(now.visited) return;
-		for(int i=0;i<now.next.size();i++) {
-			if(now.next.get(i).visited) continue;
+		if (now.visited)
+			return;
+		for (int i = 0; i < now.next.size(); i++) {
+			if (now.next.get(i).visited)
+				continue;
 			now.visited = true;
 			dfs(now.next.get(i));
-			for(int j=0;j<Ts.length;j++) {
-				if(!Ts[j].visited) {
+			for (int j = 0; j < Ts.length; j++) {
+				if (!Ts[j].visited) {
 					now.visited = false;
 					return;
 				}
@@ -54,7 +56,7 @@ public class programmers_courses30_lessons43164 {
 	}
 
 	static String[] solution(String[][] tickets) {
-		String[] answer = new String[tickets.length+1];
+		String[] answer = new String[tickets.length + 1];
 		int tSize = tickets.length;
 		answerL = new ArrayList<>();
 		Ts = new Ticket[tSize];
@@ -79,28 +81,27 @@ public class programmers_courses30_lessons43164 {
 				}
 			}
 		});
-		
-		
+
 		// 트리화하기
-		for(int i=0;i<tSize;i++) {
-			for(int j=0;j<tSize;j++) {
-				if(Ts[i].dest == Ts[j].start) {
+		for (int i = 0; i < tSize; i++) {
+			for (int j = 0; j < tSize; j++) {
+				if (Ts[i].dest == Ts[j].start) {
 					Ts[i].setNext(Ts[j]);
 				}
 			}
 		}
-		
+
 		// 첫번째 티켓을 찾고 그것으로 dfs실행
-		for(Ticket t : Ts) {
-			if(t.start.equals("ICN")) {
+		for (Ticket t : Ts) {
+			if (t.start.equals("ICN")) {
 				dfs(t);
 			}
 		}
-		
+
 		// 답
 		answer[0] = "ICN";
-		for(int i=1;i<=answerL.size();i++) {
-			answer[i] = answerL.get(answerL.size()-i);
+		for (int i = 1; i <= answerL.size(); i++) {
+			answer[i] = answerL.get(answerL.size() - i);
 		}
 
 		return answer;
