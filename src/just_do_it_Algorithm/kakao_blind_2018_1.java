@@ -2,8 +2,7 @@ package just_do_it_Algorithm;
 
 /*
  * 10:30 시작 ~ 10:57 끝
- * Integer.toBinaryString : Integer를 2진수로 변환. 뭔가 변환이 필요할땐 Integer. 이런거 써보기
- * 
+ * Integer.toBinaryString : Integer를 2진수로 변환. 뭔가 변환이 필요할땐 Integer. String. 이런거 써보기
  */
 
 public class kakao_blind_2018_1 {
