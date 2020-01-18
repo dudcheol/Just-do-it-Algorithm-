@@ -7,8 +7,11 @@ import java.util.HashMap;
 /*
  * 프로그래머스 - 코딩테스트 연습 - 완전탐색 - 모의고사 
  * 시작 : 11:35
- * 끝 : 
- * 걸린시간 : 
+ * 끝 : 12:20
+ * 걸린시간 : 45분
+ * 
+ * [고쳐야할 점]
+ * 입력값을 잘못 넣는 어이없는 실수를 했다... 절대 이런 실수로 시간 잡아먹지 말자!
  */
 
 //1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
@@ -16,7 +19,7 @@ import java.util.HashMap;
 //3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
 public class programmers_courses30_lessons42840 {
 	static int[] solution(int[] answers) {
-		int[] one = { 1, 2, 3, 4 };
+		int[] one = { 1, 2, 3, 4, 5 };
 		int[] two = { 2, 1, 2, 3, 2, 4, 2, 5 };
 		int[] three = { 3, 3, 1, 1, 2, 2, 4, 4, 5, 5 };
 		HashMap<Integer, Integer> map = new HashMap<>();
