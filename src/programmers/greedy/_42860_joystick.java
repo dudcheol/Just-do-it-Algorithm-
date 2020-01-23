@@ -17,7 +17,7 @@ public class _42860_joystick {
         if(d<0){
            d=max-1;
         }
-        if(d>=max){
+        else if(d>=max){
            d=0;
         }
         return d;
@@ -36,12 +36,6 @@ public class _42860_joystick {
         int k=0;
         int direction = 1;
         while(true){
-            if(isA[k]) {
-            	k=circle(size,k+direction);
-            	System.out.println(direction>0?"오른쪽으로 1번 이동":"왼쪽으로 1번 이동");
-            	answer++;
-            	continue;
-            }
            char c = name.charAt(k);
            System.out.print(c+"는 "+(int)c+"이므로 ");
 //           answer += ('Z'- c + 1) > c - 'A' ? c - 'A' : ('Z' - c + 1);
@@ -63,10 +57,34 @@ public class _42860_joystick {
             }
             if(end==size) break;
             
-            int next = k+direction;
-            if(isA[circle(size,next)]){
-                direction *= -1;
+            int rightA=k, leftA=k;
+            int rightTry=0,leftTry=0;
+            int endF=0;
+            while(!(endF==size)) {
+            	endF++;
+            	if(name.charAt(rightA)=='A') {
+            		rightA = circle(size,rightA+1);
+            		rightTry++;
+            		continue;
+            	}
             }
+            endF=0;
+            while(!(endF==size)) {
+            	endF++;
+            	if(name.charAt(leftA)=='A') {
+            		leftA = circle(size,leftA-1);
+            		leftTry++;
+            		continue;
+            	}
+            }
+            
+            if(rightTry > leftTry && !isA[circle(size,k-direction)]) {
+            	direction = -1;
+            } else {
+            	direction = 1;
+            }
+            
+//            direction = rightTry > leftTry ? -1 : 1;
             k=circle(size,k+direction);
             answer++;
             System.out.println(direction>0?"오른쪽으로 1번 이동":"왼쪽으로 1번 이동");
@@ -77,7 +95,8 @@ public class _42860_joystick {
 	
 	public static void main(String[] args) {
 //		String name = "JEROEN";
-		String name = "JAABAAA";
+		String name = "JAN";
+//		String name = "AAB";
 		
 		System.out.println(solution(name));
 	}
