@@ -1,4 +1,4 @@
-package kakaoBlindTest._2019;
+package _unsolvedProblems;
 
 import java.util.*;
 
@@ -117,7 +117,8 @@ public class kakao_blind_2019_3 {
 					break;
 				}
 			}
-			if(isMin)minimal.add(uni);
+			if (isMin)
+				minimal.add(uni);
 		}
 
 		System.out.println(minimal);

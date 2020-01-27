@@ -1,4 +1,4 @@
-package _unsolvedProblems;
+package programmers.DFS_BFS;
 
 import java.util.*;
 /*
