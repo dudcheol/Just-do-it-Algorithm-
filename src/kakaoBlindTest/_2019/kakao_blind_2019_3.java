@@ -1,22 +1,22 @@
-package _unsolvedProblems;
+package kakaoBlindTest._2019;
 
 import java.util.*;
 
 /*
  * 프로그래머스 - 코딩테스트 연습 - 2019 KAKAO BLIND RECRUITMENT - 후보키
- * 시작 : 14:40
- * 끝 : 16:00 모르겠음
- * 
- * 다시도전
- * 시작  : 09:50
- * 끝 : 
- * 걸린시간 : 
  * 
  * [배운것]
- * HashSet을 이용한 유일성 판단 (배열을 Set에 전부 넣고 난 후 배열의 길이와 Set의 길이가  같은지 판단)  
- * 
- * "완전탐색" 공부하고 풀자
- * "가능한 모든 조합만들기" 공부하고 풀자 - https://bcp0109.tistory.com/15
+ * HashSet을 이용한 유일성 판단 (배열을 Set에 전부 넣고 난 후 배열의 길이와 Set의 길이가  같은지 판단)
+ * HashSet으로 부분집합 여부, 차집합, 합집합 등 집합연산이 가능하다!! 많이 필요하다면 Set배열을 만들어서 비교하는 작업이  필요~~!!
+ * "완전탐색" 공부하고 풀자 -> 멱집합만들기(어떤 집합에 존재하는 모든 부분집합 구하기)
+ *
+ * [고쳐야할 것]
+ * 나는 코드가 진행되는 과정 중에 다른 문제를 해결하려는 경향이 있다.
+ * 하지만 이렇게하면 복잡해져서 더 어려워질 수 있다.
+ * 한 코드에서는 한가지 작업만해서 다음 작업은 다음 코드에서 진행하는 식으로 하면 덜 복잡해진다.
+ * 이 문제같은 경우, 3파트로 나눠서 1) 모든 부분집합 구하기, 2) 부분집합 중 유일성인 것들만 찾은 유일성집합 찾기, 3) 유일성집합 중 최소성집합찾기
+ * 로 풀면 되는데, 나는 1)의 과정에서 2와  3까지 해버릴려고 하니까 상당히 복잡해지는거다.
+ * 문제를 풀 때, 큰 단락을 정해서 풀어보자!!!!! 그리고 굳이 한꺼번에 안해도 되는 작업은 나눠서 해보자~~!!!!
  */
 
 //유일성(uniqueness) : 릴레이션에 있는 모든 튜플에 대해 유일하게 식별되어야 한다.
@@ -97,33 +97,64 @@ public class kakao_blind_2019_3 {
 
 		// 3. 유일성을 만족하는 것들 중 최소성에 위배되는 애들 제거
 		// 이미 가지고 있는 작은 부분집합을 큰 부분집합이 가지고 있을때 그것은 최소성 X
-		List<String> minimal = new ArrayList<>();
-		if (!unique.isEmpty())
-			minimal.add(unique.get(0));
-		for (String uni : unique) {
-			boolean isMin = true;
-			int cnt = 0;
-			int minSize = 0;
-			for (String min : minimal) {
-				String[] mins = min.split(" ");
-				minSize = mins.length;
-				for (int i = 0; i < mins.length; i++) {
-					if (uni.contains(mins[i])) {
-						cnt++;
-					}
-				}
-				if (cnt == minSize) {
-					isMin = false;
-					break;
-				}
+//		List<String> minimal = new ArrayList<>();
+		HashSet<String>[] set = new HashSet[unique.size()];
+		int i = 0;
+		for (String m : unique) {
+			String[] mAry = m.split(" ");
+			set[i] = new HashSet<>();
+			for (String st : mAry) {
+				set[i].add(st);
 			}
-			if (isMin)
-				minimal.add(uni);
+			i++;
 		}
 
-		System.out.println(minimal);
+		List<HashSet<String>> answer = new ArrayList<>();
 
-		return minimal.size();
+		for (int k = 0; k < set.length; k++) {
+			if(answer.isEmpty()) {
+				answer.add(set[k]);
+				continue;
+			}
+			int cnt=0;
+			for(HashSet hs : answer) {
+				if(!set[k].containsAll(hs)) {
+					cnt++;
+				}
+			}
+			if(cnt==answer.size()) {
+				answer.add(set[k]);
+			}
+		}
+
+		System.out.println(answer);
+//		if (!unique.isEmpty())
+//			minimal.add(unique.get(0));
+//		for (String uni : unique) {
+//			boolean isMin = true;
+//			int cnt = 0;
+//			int minSize = 0;
+//			for (String min : minimal) {
+//				String[] mins = min.split(" ");
+//				minSize = mins.length;
+//				for (int i = 0; i < mins.length; i++) {
+//					if (uni.contains(mins[i])) {
+//						cnt++;
+//					}
+//				}
+//				if (cnt == minSize) {
+//					isMin = false;
+//					break;
+//				}
+//			}
+//			if (isMin)
+//				minimal.add(uni);
+//		}
+
+//		System.out.println(minimal);
+
+//		return minimal.size();
+		return answer.size();
 	}
 
 	public static void main(String[] args) {
