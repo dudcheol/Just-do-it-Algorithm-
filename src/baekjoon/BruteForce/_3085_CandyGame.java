@@ -10,56 +10,45 @@ package baekjoon.BruteForce;
  * 
  * [배운 것]
  * - 2차원 배열에 경우 array.clone() 함수를 써도, 깊은복사가 되지 않습니다.
+ * - String.toCharArray 하면, char는 string의 크기에 맞게 생성됨 앞에 공백이 필요하다면 " "+string한 것을 toCharArray해야함
+ * - 배열의 크기 때문에 자꾸 헷갈리니까 그냥 변수화해서 사용하자 그게 헷갈리지 않는다.
+ * 
+ * [고쳐야할 것]
+ * - 이 문제는 DFS로 푸는 문제가 아니다... 상당히 잘못생각했다.
+ * - 코드로 옮기기 전에 문제를 어떻게 풀어야할 지 알아야 한다... 처음에 잘못푸니까  시간이 엄청 날라간다
+ * - 완전탐색이라고 재귀/백트래킹 이라는 생각을 버린다!!
+ * 
+ *** 반복문 설정할 때 대충하는 습관 버려야 한다.. 심각하다,, 자꾸 이 실수때문에 시간을 너무 많이 잡아먹는다 ***
  */
 import java.util.*;
 
 public class _3085_CandyGame {
-	static int size; // board의 크기
-	static int[] col;
-	static int answer = 0;
+	static int answer = 1;
 	static char[][] board;
-
-	static void getCandy(int row) {
-		if (row != 0) {
-			exchangeCol(row, col[row]);
-			exchangeRow(row, col[row]);
-		}
-
-		// row=현재위치인데, row까지는 약속된 행동을 모두 했으므로
-		// row = size-1이면 size-1까지는 약속된 행동을 모두 한것과 같다.
-		// 따라서 row==size-1이면 재귀를 return 한다.
-		if (row == size - 1) { // 이런 실수 너무 많이한다 ㅠㅠ
-			return;
-		}
-
-		for (int i = 1; i < col.length - 1; i++) {
-			// col[row]는 row행에 있는 몇 열에 위치해있는 지 알려줌
-			col[row + 1] = i;
-			getCandy(row + 1);
-		}
-	}
 
 	static void exchangeCol(int row, int col) {
 		// 2차원 배열에 경우 array.clone() 함수를 써도, 깊은복사가 되지 않습니다.
-		char[][] b = deepCopy(board);
+		char[][] b = board;
 
 		char temp = b[row][col];
 		// 오른쪽 교환(열끼리 교환)
 		b[row][col] = b[row][col + 1];
 		b[row][col + 1] = temp;
-
 		candyCount(b);
+		b[row][col + 1] = b[row][col];
+		b[row][col] = temp;
 	}
 
 	static void exchangeRow(int row, int col) {
-		char[][] b = deepCopy(board);
+		char[][] b = board;
 
 		char temp = b[row][col];
 		// 아래쪽 교환(행끼리 교환)
 		b[row][col] = b[row + 1][col];
 		b[row + 1][col] = temp;
-
 		candyCount(b);
+		b[row + 1][col] = b[row][col];
+		b[row][col] = temp;
 	}
 
 	static void candyCount(char[][] b) {
@@ -70,7 +59,8 @@ public class _3085_CandyGame {
 			int cntC = 1;
 			int cntR = 1;
 			for (int j = 2; j < b[i].length; j++) {
-				if (currentC == b[i][j]) {
+				char nextC = b[i][j];
+				if (currentC == nextC) {
 					cntC++;
 					answer = Math.max(answer, cntC);
 				} else {
@@ -78,7 +68,8 @@ public class _3085_CandyGame {
 					cntC = 1;
 				}
 
-				if (currentR == b[j][i]) {
+				char nextR = b[j][i];
+				if (currentR == nextR) {
 					cntR++;
 					answer = Math.max(answer, cntR);
 				} else {
@@ -87,36 +78,11 @@ public class _3085_CandyGame {
 				}
 			}
 		}
-
-//		// 열만봤을때 연속된 것들 세기
-//		for (int i = 1; i < b.length; i++) {
-//			char current = b[1][i];
-//			int cnt = 1;
-//			for (int j = 2; j < b[i].length; j++) {
-//				if (current == b[j][i]) {
-//					cnt++;
-//					answer = Math.max(answer, cnt);
-//				} else {
-//					current = b[j][i];
-//					cnt = 1;
-//				}
-//			}
-//		}
-	}
-
-	static char[][] deepCopy(char[][] target) {
-		char[][] copied = new char[target.length][target.length];
-		for (int i = 1; i < target.length; i++) {
-			for (int j = 1; j < target.length; j++) {
-				copied[i][j] = target[i][j];
-			}
-		}
-		return copied;
 	}
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		size = sc.nextInt();
+		int size = sc.nextInt();
 		String[] input = new String[size + 1];
 		for (int i = 1; i <= size; i++) {
 			input[i] = sc.next();
@@ -128,9 +94,27 @@ public class _3085_CandyGame {
 		for (int i = 1; i <= size; i++) {
 			board[i] = input[i].toCharArray();
 		}
-		col = new int[size + 1];
 
-		getCandy(0);
+		// 여기서 엄청난 실수를 저질렀다!!!
+		// 밑에것처럼 해버리면 4x4 밖에 안구해진다..
+//		for (int i = 1; i < size; i++) {
+//			for (int j = 1; j < size; j++) {
+//				exchangeCol(i, j);
+//				exchangeRow(i, j);
+//			}
+//		}
+		
+		for (int i = 1; i <= size; i++) {
+			for (int j = 1; j < size; j++) {
+				exchangeCol(i, j);
+			}
+		}
+		
+		for (int i = 1; i <= size; i++) {
+			for (int j = 1; j < size; j++) {
+				exchangeRow(j, i);
+			}
+		}
 
 		System.out.println(answer);
 	}
