@@ -9,6 +9,8 @@ package baekjoon.BruteForce;
  * for문을 사용할 때 범위 항상 예의주시
  * [배운 것]
  * - 이 문제의 경우 dfs로 풀 수 있는 문제였다. ㅜ모양을 제외한 나머지가 dfs로 가능했음
+ * - bit배열로도 가능한 문제였음.. 블록모양별로 배열을 만든 후,
+ *   paper와 비교해가서 진행할 수 있다.. 힌트 : block[k][y][x] * paper[sy + y][sx + x]
  */
 import java.util.*;
 import java.io.*;
