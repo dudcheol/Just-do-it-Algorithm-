@@ -42,7 +42,8 @@ public class _155p_Picnic {
 			}
 
 			if (set.size() != n) {
-				answer++;
+				set.clear();
+				return;
 //				temp.clear();
 			}
 
@@ -52,6 +53,8 @@ public class _155p_Picnic {
 //				answer++;
 //			}
 
+			answer++;
+			System.out.println(str);
 			set.clear();
 //			temp.clear();
 
@@ -59,12 +62,8 @@ public class _155p_Picnic {
 		}
 
 		for (int i = /* 포인트 */k + 1; i < m; i++) {
-			if (visited[i])
-				continue;
-			visited[i] = true;
 			num[k + 1] = i;
 			makeAllCouple(k + 1);
-			visited[i] = false;
 		}
 	}
 
@@ -84,6 +83,41 @@ public class _155p_Picnic {
 //		return false;
 //	}
 
+	static boolean[][] areFriends = new boolean[10][10];
+
+	// taken[i] = i번째 학생이 짝을 이미 찾았으면 true, 아니면 false
+	static int countPairings(boolean[] taken) {
+		// BaseCase : 모든 학생이 짝을 찾았으면 한 가지 방법을 찾았으니 종료한다.
+//		boolean finished = true;					 			=> 중복발생
+//		for (int i = 0; i < n; i++) {
+//			if (!taken[i])
+//				finished = false;
+//		}
+//		if (finished)
+//			return 1;
+		int firstFree = -1;
+		for (int i = 0; i < n; i++) {
+			if (!taken[i]) {
+				firstFree = i;
+				break;
+			}
+		}
+		if (firstFree == -1) // 위 반복문에서 taken이 false인 경우가 없었다는 의미이므로
+			return 1;
+		int ret = 0;
+		// 서로 친구인 두 학생을 찾아 짝을 지어 준다.
+//		for (int i = 0; i < n; i++) {						=> 처음부터 다시 다 구하면 중복발생한다
+//			for (int j = 0; j < n; j++) {					=> firstFree 이후만 구해서 가장 번호가 빠른 사람의 짝만 구함
+		for (int i = firstFree + 1; i < n; i++) {
+			if (!taken[i] && areFriends[firstFree][i]) {
+				taken[firstFree] = taken[i] = true;
+				ret += countPairings(taken);
+				taken[firstFree] = taken[i] = false;
+			}
+		}
+		return ret;
+	}
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int TC = Integer.parseInt(br.readLine());
@@ -100,26 +134,30 @@ public class _155p_Picnic {
 			couple = new int[m][2];
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < m; i++) {
-				couple[i][0] = Integer.parseInt(st.nextToken());
-				couple[i][1] = Integer.parseInt(st.nextToken());
+//				couple[i][0] = Integer.parseInt(st.nextToken());
+//				couple[i][1] = Integer.parseInt(st.nextToken());
+				int x = Integer.parseInt(st.nextToken());
+				int y = Integer.parseInt(st.nextToken());
+				areFriends[x][y] = true;
+				areFriends[y][x] = true;
 			}
 
-			/**/Arrays.sort(couple, new Comparator<int[]>() {
-				@Override
-				public int compare(int[] o1, int[] o2) {
-					if (o1[0] == o2[0]) {
-						return Integer.compare(o1[1], o2[1]);
-					}
-					return Integer.compare(o1[0], o2[0]);
-				}
-			});
+//			/**/Arrays.sort(couple, new Comparator<int[]>() {
+//				@Override
+//				public int compare(int[] o1, int[] o2) {
+//					if (o1[0] == o2[0]) {
+//						return Integer.compare(o1[1], o2[1]);
+//					}
+//					return Integer.compare(o1[0], o2[0]);
+//				}
+//			});
 
-			if (m == 1) {
-				System.out.println(1);
-				continue;
-			}
+			boolean[] taken = new boolean[10];
 
-			makeAllCouple(-1);
+			answer = countPairings(taken);
+
+//			makeAllCouple(taken);
+
 			// 얘는 4명일때만 가능..
 //			for (int i = 0; i <= m - 1; i++) {
 //				int[] target = couple[i];
@@ -135,6 +173,8 @@ public class _155p_Picnic {
 
 			System.out.println(answer);
 			answer = 0;
+			for (boolean[] f : areFriends)
+				Arrays.fill(f, false);
 		}
 
 //		HashMap<Integer, List<Integer>> frd = new HashMap<>();
