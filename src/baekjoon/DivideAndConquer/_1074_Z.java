@@ -20,40 +20,39 @@ public class _1074_Z {
 //	static boolean[][] board;
 	static boolean alreadyFind;
 
-	static void visitZ(int n, int x, int y) {
-		if (alreadyFind)
-			return;
-		if (n == 1) {
+	static void visitZ(int size, int x, int y) {
+		if (size == 2) {
 			if (x == r && y == c) {
 				System.out.println(cnt);
-				alreadyFind = true;
 				return;
 			}
 			cnt++;
+			
 			if (x == r && y + 1 == c) {
 				System.out.println(cnt);
-				alreadyFind = true;
 				return;
 			}
 			cnt++;
-			if (x + 1 == r && y == c + 1) {
+			
+			if (x + 1 == r && y == c) {
 				System.out.println(cnt);
-				alreadyFind = true;
 				return;
 			}
 			cnt++;
+			
 			if (x + 1 == r && y + 1 == c) {
 				System.out.println(cnt);
-				alreadyFind = true;
 				return;
 			}
 			cnt++;
-		} else {
-			if(!alreadyFind) visitZ(n - 1, x, x);
-			if(!alreadyFind) visitZ(n - 1, x, y/2);
-			if(!alreadyFind) visitZ(n - 1, y/2, x);
-			if(!alreadyFind) visitZ(n - 1, y/2, y/2);
+			return;
 		}
+		/* half를 이용할 생각을 못했네 ㅠㅠ */
+		int half = size / 2;
+		visitZ(half, x, y);
+		visitZ(half, x, y + half);
+		visitZ(half, y + half, x);
+		visitZ(half, x + half, y + half);
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -68,6 +67,6 @@ public class _1074_Z {
 //		board = new boolean[size][size];
 //		board[r][c] = true;
 
-		visitZ(N, 0, size);
+		visitZ(size, 0, 0);
 	}
 }
