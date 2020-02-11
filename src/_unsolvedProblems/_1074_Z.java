@@ -1,13 +1,14 @@
-package baekjoon.DivideAndConquer;
+package _unsolvedProblems;
 
 /*
  * 백준 - 1074 - Z
- * 시작~끝: 11:30~
- * 시간:
  * 
  * 1차시도 12:25 메모리초과
  * 2차시도 12:32 시간초과
+ * N차시도 ...뭐가 틀린지 모르겠음
  * 
+ * [배운 것]
+ * - 문제에서 제시된 조건을 보고 메모리초과/시간초과 여부를 먼저 판단하면 헛수고할 일이 없다.
  */
 
 import java.util.*;
@@ -18,7 +19,6 @@ public class _1074_Z {
 	static int cnt = 0;
 	/* 메모리 초과 */
 //	static boolean[][] board;
-	static boolean alreadyFind;
 
 	static void visitZ(int size, int x, int y) {
 		if (size == 2) {
