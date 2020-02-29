@@ -14,13 +14,14 @@ public class skill_test_level2_q1_try1 {
             } else {
                 if(!st.isEmpty() && st.peek()=='('){
                     st.pop();
-                    answer = true;
                 } else {
                 	return false;
                 }
             }
         }
-        return answer;
+        
+        if(!st.isEmpty()) return false;
+        else return true;
     }
 	
 	public static void main(String[] args) {
