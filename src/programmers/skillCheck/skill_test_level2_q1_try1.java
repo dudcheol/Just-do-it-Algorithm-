@@ -4,29 +4,22 @@ import java.util.*;
 
 public class skill_test_level2_q1_try1 {
 	static boolean solution(String s) {
-        boolean answer = true;
+        boolean answer = false;
 
         Stack<Character> st = new Stack<>();
         
         for(char _s : s.toCharArray()){
-            if(st.isEmpty()) {
-                if(_s=='(') {
-                    st.push(_s);
-                    continue;
-                }
-                else return false;
-            }
             if(_s=='('){
                 st.push(_s);
             } else {
-                if(st.peek()=='('){
+                if(!st.isEmpty() && st.peek()=='('){
                     st.pop();
+                    answer = true;
+                } else {
+                	return false;
                 }
             }
         }
-        
-        if(st.isEmpty()) answer = true;
-        else answer = false;
         return answer;
     }
 	
