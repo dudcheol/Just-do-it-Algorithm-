@@ -1,4 +1,4 @@
-package programmers.skillCheck;
+package programmers.skillCheck.level2;
 
 public class skill_test_level2_q2_try2 {
 	static String[] solution(String[] files) {

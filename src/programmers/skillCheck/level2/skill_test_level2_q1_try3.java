@@ -1,4 +1,4 @@
-package programmers.skillCheck;
+package programmers.skillCheck.level2;
 
 public class skill_test_level2_q1_try3 {
 	static boolean[] visited;

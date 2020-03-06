@@ -1,4 +1,4 @@
-package programmers.skillCheck;
+package programmers.skillCheck.level2;
 
 import java.util.*;
 
