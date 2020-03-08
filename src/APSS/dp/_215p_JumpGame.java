@@ -34,27 +34,25 @@ public class _215p_JumpGame {
 	static int[][] board;
 	static int[][] cache;
 
-	static boolean jump(int y, int x) {
+	static int jump(int y, int x) {
 		// 기저 : 입력값이 범위를 벗어남
 		if (y >= n || x >= n) {
-			return false;
+			return 0;
 		}
 		// 기저 : 입력값이 '끝'에 도착
 		if (y == n - 1 && x == n - 1) {
-			return true;
+			return 1;
 		}
 
 		// 메모이제이션 사용
-		if (cache[y][x] != -1) { // 캐시에 있는 값이 -1 아니면 저장된 정보가 있는 것이므로 그 정보 사용
-			if (cache[y][x] == 1)
-				return true;
-			else
-				return false;
-		}
-		// 캐시에 있는 값이 -1이면 저장된 정보가 없는 것이므로 직접 계산 후 캐시에 저장
-		cache[y][x] = jump(y, x + board[y][x]) || jump(y + board[y][x], x) ? 1 : 0;
+		if (cache[y][x] != -1) // 캐시에 있는 값이 -1 아니면 저장된 정보가 있는 것이므로 그 정보 사용
+			return cache[y][x];
 
-		return cache[y][x] == 1 ? true : false;
+		// 캐시에 있는 값이 -1이면 저장된 정보가 없는 것이므로 직접 계산 후 캐시에 저장
+		cache[y][x] = (jump(y, x + board[y][x]) == 1 ? true : false || jump(y + board[y][x], x) == 1 ? true : false) ? 1
+				: 0;
+
+		return cache[y][x];
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
@@ -74,7 +72,7 @@ public class _215p_JumpGame {
 				// 캐시 초기화
 				Arrays.fill(cache[i], -1);
 			}
-			System.out.println(jump(0, 0) ? "YES" : "NO");
+			System.out.println(jump(0, 0) == 1 ? "YES" : "NO");
 		}
 	}
 }
