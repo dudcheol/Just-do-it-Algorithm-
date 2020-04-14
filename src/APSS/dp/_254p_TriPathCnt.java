@@ -40,22 +40,19 @@ public class _254p_TriPathCnt {
      */
     static int getTriPathCnt(int y, int x) {
         // 기저
-        if (x >= n || y >= n)
+        if (y == n - 1) /* 애초에 범위를 신경써서 정의하자! 그럼 까다로워 지는 상황을 면할 수 있다. */
             return 1;
-        if (getMaxPath(y + 1, x) == 0 || getMaxPath(y + 1, x + 1) == 0) {
-            return 1;
-        }
 
         // 메모이제이션
-        if (cache2[y][x] != -1) return cache2[y][x];
+        if (cache2[y][x] != -1)
+            return cache2[y][x];
 
-        if (getMaxPath(y + 1, x) > getMaxPath(y + 1, x + 1)) {
+        if (getMaxPath(y + 1, x) > getMaxPath(y + 1, x + 1))
             return cache2[y][x] = getTriPathCnt(y + 1, x);
-        } else if (getMaxPath(y + 1, x) < getMaxPath(y + 1, x + 1)) {
+        else if (getMaxPath(y + 1, x) < getMaxPath(y + 1, x + 1))
             return cache2[y][x] = getTriPathCnt(y + 1, x + 1);
-        } else {
+        else
             return cache2[y][x] = getTriPathCnt(y + 1, x) + getTriPathCnt(y + 1, x + 1);
-        }
     }
 
     public static void main(String[] args) throws IOException {
