@@ -29,12 +29,17 @@ public class _258p_Snail {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         int TC = Integer.parseInt(br.readLine());
+        /**
+         * 주의!!
+         * 되도록 cache는 한 번만 생성 하도록 한다. 크기가 매우 클 경우 치명적일 수 있기 때문이다.
+         * cache의 크기가 정적 임에도 불구하고, 반복문 내에서 매번 생성하면 '시간초과'가 날 수 있다.
+         */
+        cache = new double[MAX_N][2 * MAX_N]; // 현재 이동한 거리에 위치해 있을 때 m일 안에 n이상 가있을 수 있는 경우의 수를 메모이제이션 함으로써 다음에 동일한 부분문제가 발생할 때 계산을 줄일 수 있음
 
         for (int tc = 0; tc < TC; tc++) {
             st = new StringTokenizer(br.readLine());
             n = Integer.parseInt(st.nextToken());
             m = Integer.parseInt(st.nextToken());
-            cache = new double[MAX_N][2 * MAX_N]; // 현재 이동한 거리에 위치해 있을 때 m일 안에 n이상 가있을 수 있는 경우의 수를 메모이제이션 함으로써 다음에 동일한 부분문제가 발생할 때 계산을 줄일 수 있음
             for (double[] c : cache) Arrays.fill(c, -1);
 
             System.out.println(climbSnail(0, 0));
