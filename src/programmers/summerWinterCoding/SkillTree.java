@@ -3,6 +3,9 @@ package programmers.summerWinterCoding;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 13분
+ */
 public class SkillTree {
 
     static int solution(String skill, String[] skill_trees) {
