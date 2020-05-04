@@ -9,9 +9,9 @@ public class Square {
         long greater = Math.max(w, h);
         long smaller = Math.min(w, h);
 
-        long remainder = greater % smaller;
+        long mok = greater % smaller == 0 ? greater / smaller : greater / smaller + 1;
 
-        return (w * h) - (greater + remainder);
+        return (w * h) - (smaller * mok);
     }
 
     public static void main(String[] args) {
