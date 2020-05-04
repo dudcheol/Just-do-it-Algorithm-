@@ -2,16 +2,20 @@ package programmers.summerWinterCoding;
 
 public class Square {
 
-    static long solution(int w, int h) {
-        long answer = 1;
+    static long solution(long w, long h) {
+        if (w == h) { // 같으면 둘 중 하나 만큼이 대각선임
+            return w * h - w;
+        }
+        if (w == 1 || h == 1) { // 둘 중 하나라도 1이면 전부 사용 못함
+            return 0;
+        }
 
-        // w,h 중 더 긴 것, 더 작은 것 찾기
-        long greater = Math.max(w, h);
-        long smaller = Math.min(w, h);
+        long gcd = gcd(w, h);
+        return (w * h) - (w + h - gcd);
+    }
 
-        long mok = greater % smaller == 0 ? greater / smaller : greater / smaller + 1;
-
-        return (w * h) - (smaller * mok);
+    static long gcd(long a, long b) {
+        return a % b == 0 ? b : gcd(b, a % b);
     }
 
     public static void main(String[] args) {
