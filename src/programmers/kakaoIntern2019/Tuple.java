@@ -10,6 +10,18 @@ import java.util.StringTokenizer;
 public class Tuple {
 
     static int[] solution(String s) {
+        /**
+         * StringTokenizer st = new StringTokenizer(s, "{}");
+         * while (st.hasMoreTokens())
+         *      System.out.println(st.nextToken());
+         *
+         * 위와 같은 방법으로 토큰화해서 풀어도 된다. 또는
+         *
+         * String[] arr = s.replaceAll("[{]", " ").replaceAll("[}]", " ").trim().split(" , ");
+         * replaceAll을 사용하고 정규식을 사용해서 풀어도 된다.
+         *
+         */
+
         HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 
         for (int i = 0; i < s.length(); i++) {
@@ -24,6 +36,9 @@ public class Tuple {
                     target = s.charAt(++k);
                 }
                 ArrayList<Integer> onesoList = colonParsing(onesos);
+                /**
+                 * map의 key를 원소의 수로 두고 푸는것 말고, Collections.sort 사용해서 길이가 짧은 순서로 정렬한 다음 풀어도 됐음
+                 */
                 map.put(onesoList.size(), onesoList);
                 i = k;
             }
@@ -38,12 +53,8 @@ public class Tuple {
             }
         }
 
-        int[] answer = new int[ans.size()];
-        for (int i = 0; i < ans.size(); i++) {
-            answer[i] = ans.get(i);
-        }
-
-        return answer;
+        /* stream 사용하여 리스트를 배열로 변환 */
+        return ans.stream().mapToInt(Integer::intValue).toArray();
     }
 
     static ArrayList<Integer> colonParsing(String target) {
