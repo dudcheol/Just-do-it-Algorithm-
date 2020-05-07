@@ -35,6 +35,11 @@ public class BadUser {
                 }
             }
             regx += '$';
+            /*
+              굳이 이렇게 할 필요 없이,
+              banned_id[i] = banned_id[i].replace("*", "."); 를 해도 됐다.
+              참고) .대신 [\\w]를 했으면 더 섬세한 코드
+             */
 
             // user_id 중 regx와 일치하는 문자 찾기
             int findMatches = 0;
@@ -57,7 +62,7 @@ public class BadUser {
     static int getBanCnt(int k, int compareBanId) {
         if (k == candiList.size() || compareBanId == banIdSize) {
             for (HashSet<String> ad : alreadyDone){
-                if (visited.containsAll(ad)){
+                if (visited.containsAll(ad)){ /* A.containsAll(B) => B는 A의 부분집합인가? */
                     return 0;
                 }
             }
@@ -67,6 +72,10 @@ public class BadUser {
 
         int ret = 0;
 
+        /* 오래걸린 이유 :
+        * 중복되는 부분을 제거하는 방법을 생각하는 것이 오래걸렸다.
+        * 이 문제의 경우 '기저'부분에서 중복을 제거할 수 있다는 것을 배웠으니 다음엔 바로 해결할 수 있도록 하자
+        */
         for (int i = 0; i < candiList.size(); i++) {
             String candidate = candiList.get(i);
             if (visited.contains(candidate)) continue;
