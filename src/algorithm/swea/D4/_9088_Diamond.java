@@ -1,4 +1,4 @@
-package algorithm.D4;
+package algorithm.swea.D4;
 
 /*
  * 시작 : 10:35
