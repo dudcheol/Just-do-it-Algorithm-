@@ -1,9 +1,0 @@
-/bin/
-src/CODING_TEST/*
-src/algorithm/aj/*
-.idea/*
-src/algorithm/ssafy_homework/*
-.classpath
-.project
-just_do_it_Algorithm.iml
-.idea
