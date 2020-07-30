@@ -1,14 +1,5 @@
 /bin/
-src/CODING_TEST/
-src/CODING_TEST/_coupang_3.java
-src/CODING_TEST/_coupang_2.java
-src/CODING_TEST/_coupang_1.java
-src/CODING_TEST/line_2019.java
-src/CODING_TEST/_line_6.java
-src/CODING_TEST/_line_5.java
-src/CODING_TEST/_line_4.java
-src/CODING_TEST/_line_3.java
-src/CODING_TEST/_line_2.java
-src/CODING_TEST/_line_1.java
+src/CODING_TEST/*
+src/algorithm/aj/*
 .idea/*
-src/ssafy_homework/*
+src/algorithm/ssafy_homework/*
