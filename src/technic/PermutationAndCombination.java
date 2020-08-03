@@ -18,10 +18,10 @@ public class PermutationAndCombination {
         totalCnt = 0;
 
         switch (mode) {
-            case 1: // 주사위던지기1 : 중복순열
+            case 1: // 주사위던지기1 : 순열
                 dice1(0);
                 break;
-            case 2: // 주사위던지기1 : 순열
+            case 2: // 주사위던지기1 : 중복순열
                 dice2(0);
                 break;
             case 3: // 주사위던지기1 : 중복조합
@@ -62,7 +62,7 @@ public class PermutationAndCombination {
 
         for (int i = 1; i <= 6; i++) {
             numbers[cnt] = i;
-            dice1(cnt + 1);
+            dice2(cnt + 1);
         }
     }
 
@@ -88,7 +88,7 @@ public class PermutationAndCombination {
 
         for (int i = start; i <= 6; i++) {
             numbers[cnt] = i;
-            dice3(cnt + 1, i + 1);
+            dice4(cnt + 1, i + 1);
         }
     }
 }
