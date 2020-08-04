@@ -17,7 +17,10 @@ public class _1238_Contact {
     static HashMap<Integer, Integer> hm;
     static int maxDepth;
     static int answer;
+    static int max;
 
+    // DFS 로는 풀 수 없음
+    // 동시에 사방으로 퍼져나가야 하므로
 //    static void dfs(int depth, int start) {
 //        boolean isLastNode = true;
 //
@@ -47,24 +50,30 @@ public class _1238_Contact {
         int level = 0;
 
         while (!queue.isEmpty()) {
-            boolean isLastNode = true;
+            // lastNode를 알 필요가 없다!
+            // 어차피 마지막 루프일때 마지막 레벨이므로
+            // current가 마지막노드인지 아닌지 판단할 필요 없다.
+            // 마찬가지로 HashMap으로 레벨별 최대 번호를 기억하고 있을 필요 없음.
+            // 그냥 초기화하고 업데이트시켜도 무방함! (max)
+//            boolean isLastNode = true;
             int size = queue.size();
+            max = 0;
 
             while (--size >= 0){
                 current = queue.poll();
+                max = Math.max(max, current);
 
                 for (int i = 1; i <= 100; i++) {
                     if (map[current][i] && !visited[i]) {
-                        isLastNode = false;
+//                        isLastNode = false;
                         queue.offer(i);
                         visited[i] = true;
                     }
                 }
-
-                if (isLastNode) {
-                    hm.put(level, Math.max(hm.getOrDefault(level, Integer.MIN_VALUE), current));
-                    maxDepth = Math.max(maxDepth, level);
-                }
+//                if (isLastNode) {
+//                    hm.put(level, Math.max(hm.getOrDefault(level, Integer.MIN_VALUE), current));
+//                    maxDepth = Math.max(maxDepth, level);
+//                }
             }
             ++level;
         }
@@ -97,7 +106,8 @@ public class _1238_Contact {
 //            dfs(0, start);
             bfs(start);
 
-            answer = hm.get(maxDepth);
+//            answer = hm.get(maxDepth);
+            answer = max;
             sb.append("#").append(tc).append(" ").append(answer).append("\n");
         }
 
