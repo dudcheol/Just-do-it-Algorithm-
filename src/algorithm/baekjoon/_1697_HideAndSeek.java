@@ -2,50 +2,47 @@ package algorithm.baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class _1697_HideAndSeek {
+    static int n, k;
+    static int answer;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken()); // 수빈 위치
-        int k = Integer.parseInt(st.nextToken()); // 동생 위치
-        int answer = 0;
+        n = Integer.parseInt(st.nextToken()); // 수빈 위치
+        k = Integer.parseInt(st.nextToken()); // 동생 위치
+        answer = 0;
 
         int tmp = 0;
-        if (n > k) {
-            // 항상 k가 커야함
+        if(n > k){
             tmp = k;
             k = n;
             n = tmp;
         }
 
-        while (n != k) {
-            // k가 홀수라면
-            if (k % 2 == 1) {
-                k++;
-                answer++;
-            }
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(n);
 
-            if (k / 2 < n) {
-                // 나누기 2를 하지 않고 계속 빼는 식으로 하는것이 이득인가?
-                int notDiv = k - n;
-                // 나누기 2를 한 상태에서 계속 더해가는 식으로 하는것이 이득인가?
-                int div = n - k / 2;
+        int level = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int polled = q.poll();
 
-                if (notDiv <= div) {
-                    answer += notDiv;
-                } else {
-                    answer += div + 1;
+                if (polled == k) {
+                    System.out.println(level);
+                    return;
                 }
-                break;
+                q.offer(polled * 2);
+                q.offer(polled + 1);
+                q.offer(polled - 1);
             }
-            k = k / 2;
-            answer++;
+            level++;
         }
-
-        System.out.println(answer);
     }
 }
