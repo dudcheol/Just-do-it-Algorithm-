@@ -1,4 +1,4 @@
-package algorithm.others.array;
+package algorithm.javaStudy.array;
 
 public class Memory {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package algorithm.others.java.tip;
+package algorithm.javaStudy.java.tip;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

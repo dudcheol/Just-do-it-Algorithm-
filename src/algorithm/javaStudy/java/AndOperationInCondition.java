@@ -1,4 +1,4 @@
-    package algorithm.others.java;
+    package algorithm.javaStudy.java;
 
     public class AndOperationInCondition {
         public static void main(String[] args) {

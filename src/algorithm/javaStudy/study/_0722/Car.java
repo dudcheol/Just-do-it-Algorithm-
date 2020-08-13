@@ -1,4 +1,4 @@
-package algorithm.others.study._0722;
+package algorithm.javaStudy.study._0722;
 
 public class Car {
     // data == field == property : field는 기본값을 가짐. 전역 변수

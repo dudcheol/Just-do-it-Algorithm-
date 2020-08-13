@@ -1,4 +1,4 @@
-package algorithm.others.study._0721;
+package algorithm.javaStudy.study._0721;
 
 // 파일 하나에 public 클래스는 하나뿐이어야 한다.
 // 또한 해당 클래스는 파일명과 동일해야 한다.

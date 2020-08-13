@@ -1,4 +1,4 @@
-package algorithm.others.study._0721;
+package algorithm.javaStudy.study._0721;
 
 public class Switch {
     public static void main(String[] args) {

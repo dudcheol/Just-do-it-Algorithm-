@@ -1,4 +1,4 @@
-package algorithm.others.study._0722;
+package algorithm.javaStudy.study._0722;
 
 public class CarUser {
     public static void main(String[] args) {

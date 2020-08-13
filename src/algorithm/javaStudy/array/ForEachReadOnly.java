@@ -1,4 +1,4 @@
-package algorithm.others.array;
+package algorithm.javaStudy.array;
 
 import java.util.Arrays;
 

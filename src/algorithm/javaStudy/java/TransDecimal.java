@@ -1,4 +1,4 @@
-    package algorithm.others.java;
+    package algorithm.javaStudy.java;
 
     public class TransDecimal {
         public static void main(String[] args) {
