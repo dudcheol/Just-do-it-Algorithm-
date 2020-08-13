@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ������Ʈ ���� -->
+<!ELEMENT booklist (book*)>
+	<!ELEMENT book (isbn, title, author+, publisher, price)>
+		<!ELEMENT isbn (#PCDATA)>
+		<!ELEMENT title (#PCDATA)>
+		<!ELEMENT author (#PCDATA)>
+    	<!ELEMENT publisher (#PCDATA)>
+		<!ELEMENT price (#PCDATA)>
+
+<!-- �Ӽ� ���� -->
+<!ATTLIST book 		
+		kind CDATA #REQUIRED>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 회원 정보 xml -->
+<members>
+	<member>
+		<num>100</num>
+		<name>tommy</name>
+		<address>seoul</address>
+	</member>
+
+	<member>
+		<num>200</num>
+		<name>jane</name>
+		<address>la</address>
+	</member>
+
+	<member>
+		<num>300</num>
+		<name>billy</name>
+		<address>london</address>
+	</member>
+
+	<member>
+		<num>400</num>
+		<name>sally</name>
+		<address>singapore</address>
+	</member>
+
+	<member>
+		<num>500</num>
+		<name>millton</name>
+		<address>osaka</address>
+	</member>
+</members>
