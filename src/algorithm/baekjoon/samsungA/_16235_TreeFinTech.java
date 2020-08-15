@@ -2,7 +2,10 @@ package algorithm.baekjoon.samsungA;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 /**
  * 골드 4 - 나무 재테크
@@ -40,13 +43,12 @@ public class _16235_TreeFinTech {
                 int r = tree.x;
                 int c = tree.y;
                 int age = tree.age;
-                map[r][c] -= age;
-                if (map[r][c] < 0) {
+                if (map[r][c] - age < 0) {
                     // 먹지못하고 즉시 죽음
                     dead.offer(tree);
-                    iterator.remove();
-                    map[r][c] += age;
+                    iterator.remove(); /* LinkedList에서 iterator를 통한 remove : O(1) */
                 } else {
+                    map[r][c] -= age;
                     tree.age += 1;
                 }
             }
@@ -58,8 +60,23 @@ public class _16235_TreeFinTech {
             }
 
             // 가을
-            for (int i = 0; i < trees.size(); i++) {
-                Tree tree = trees.get(i);
+            /* 시간 지연 사유 : for문 사용 */
+//            for (int i = 0; i < trees.size(); i++) {
+//                Tree tree = trees.get(i);
+//                int r = tree.x;
+//                int c = tree.y;
+//                if (tree.age % 5 != 0) continue;
+//                for (int d = 0; d < 8; d++) {
+//                    int nr = r + dr[d];
+//                    int nc = c + dc[d];
+//                    if (nr < 1 || nc < 1 || nr > n || nc > n) continue;
+//                    trees.addFirst(new Tree(nr, nc, 1));
+//                    i++;
+//                }
+//            }
+
+            LinkedList<Tree> babyTrees = new LinkedList<>();
+            for (Tree tree : trees) {
                 int r = tree.x;
                 int c = tree.y;
                 if (tree.age % 5 != 0) continue;
@@ -67,10 +84,11 @@ public class _16235_TreeFinTech {
                     int nr = r + dr[d];
                     int nc = c + dc[d];
                     if (nr < 1 || nc < 1 || nr > n || nc > n) continue;
-                    trees.addFirst(new Tree(nr, nc, 1));
-                    i++;
+                    babyTrees.add(new Tree(nr, nc, 1));
                 }
             }
+            /* LinkedList에서 addAll : O(1) */
+            trees.addAll(0, babyTrees);
 
             // 겨울
             for (int i = 1; i <= n; i++) {
@@ -95,9 +113,9 @@ public class _16235_TreeFinTech {
         yangboon = new int[n + 1][n + 1];
 
         for (int i = 1; i <= n; i++) {
-            Arrays.fill(map[i], 5);
             st = new StringTokenizer(br.readLine());
             for (int j = 1; j <= n; j++) {
+                map[i][j] = 5;
                 yangboon[i][j] = Integer.parseInt(st.nextToken());
             }
         }
@@ -116,11 +134,6 @@ public class _16235_TreeFinTech {
         }
 
         year = 0;
-
-//        // 나이가 어린 나무순서로 정렬
-//        Collections.sort(trees, (o1, o2) -> {
-//            return Integer.compare(o1.age, o2.age);
-//        });
 
         simulate();
 
