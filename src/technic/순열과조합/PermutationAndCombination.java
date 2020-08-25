@@ -1,4 +1,4 @@
-package technic;
+package technic.순열과조합;
 
 import java.util.Arrays;
 import java.util.Scanner;
