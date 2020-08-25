@@ -17,7 +17,7 @@ public class _15686_ChickenDelivery {
     public static void main(String[] args) throws IOException {
         // 입력
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), " "); // " " 제시해주는 것이 조금이라도 효율적
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         chickenHouse = new ArrayList<>();
