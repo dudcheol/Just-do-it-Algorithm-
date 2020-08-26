@@ -3,6 +3,9 @@ package javaStudy.jdbc.product;
 import java.util.List;
 
 // 구현해야 되는 기능들 추상 메소드로 표시
+// Client를 위해서 작성
+// 서버에서 제공하는 서비스를 클라이언트는 정확히 어떻게 진행되는지 알 필요 없다.
+// 클라이언트는 단지 어떤 함수가 어떤 동작을 하는지만 알면 되므로 그것을 알 수 있도록 인터페이스를 제공한다.
 public interface IProductmgr {
     // 1. 상품정보를 저장
     int add(Product p);

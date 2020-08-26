@@ -12,6 +12,8 @@ public class Product {
     private int price;
     private int qty;
 
+    // constructor
+    // 기본 생성자는 되도록 생성해주도록 한다
     public Product() {
     }
 
@@ -69,7 +71,10 @@ public class Product {
     }
 
     public void setQty(int qty) {
-        this.qty = qty;
+        if (qty > 0) // 유효성 검사
+            this.qty = qty;
+        else
+            System.out.println("재고를 정확히 입력해주세요!");
     }
 
     @Override

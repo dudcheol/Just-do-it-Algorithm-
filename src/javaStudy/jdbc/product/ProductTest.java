@@ -5,7 +5,11 @@ import java.util.Scanner;
 
 public class ProductTest {
     private static Scanner sc = new Scanner(System.in);
-    private static ProductMgrImpl productMgr = ProductMgrImpl.getInstance();
+    // 타입은 인터페이스로 한다.
+    // 왜? 인터페이스를 오버라이딩하지 않은 메소드들을 사용하지 못하게 하기 위해서
+    // 클라이언트에게 사용가능한 메소드를 인터페이스에 담아서 보내주기 때문에 클라이언트는 인터페이스에 정의된 메소드만을 사용하도록 해야 함
+    private static IProductmgr productMgr = ProductMgrImpl.getInstance(); // 인터페이스에 정의된 메소드만을 사용할 수 있음
+//    private static ProductMgrImpl productMgr2 = ProductMgrImpl.getInstance();
 
     public static void main(String[] args) {
 
