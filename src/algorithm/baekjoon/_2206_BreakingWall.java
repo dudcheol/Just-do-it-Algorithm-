@@ -39,6 +39,7 @@ public class _2206_BreakingWall {
         map = new int[N][M];
         visited = new boolean[N][M][2]; // 벽을 부순 상태와 부수지 않은 상태에서의 방문을 확인
         // visited = new boolean[2][N][M]; : NxM배열이 2개 라는 의미. 이것도 상관없음
+        // 헷갈리면 1층, 2층 ... 이나 판처럼 생각해도 좋음!
 
         // 맵, 캐시초기화
         for (int i = 0; i < N; i++) {
@@ -48,7 +49,7 @@ public class _2206_BreakingWall {
             }
         }
 
-        // 최단경로 문제 : bfs
+        // "가중치가 없는 최단경로" 문제 : bfs
         bfs();
     }
 
@@ -77,6 +78,7 @@ public class _2206_BreakingWall {
 
                 if (map[ny][nx] == 1) { // 벽을 만났는데
                     if (breakWall == 0 && !visited[ny][nx][1]) { // 벽을 부순적이 없고, 이 곳을 방문한적도 없다면
+                        // visited[ny][nx][1] => 부수고나서 방문했는지 확인하는 배열에서 방문한적이 있는 지 없는 지 확인!
                         visited[ny][nx][1] = true; // 벽을 부순다음 방문처리
                         q.offer(new Pos(ny, nx, 1, count + 1));
                     }
@@ -86,11 +88,16 @@ public class _2206_BreakingWall {
                         q.offer(new Pos(ny, nx, breakWall, count + 1));
                     }
                 }
-            }
-        }
+
+                // 교수님 풀이
+                // 꺼낸 데이터 가지고 4방 탐색
+                // 1) 다음 위치가 벽이 아니고 (그 전에 벽을 부쉈던 아니던 상관없이 그냥 가면 됨)
+                // 2) 다음 위치가 벽인 경우 (아직 부순적이 없어야 갈 수 있음)
+            } // end of for
+        } // end of while
 
         System.out.println(-1);
-    }
+    } // end of bfs
 
 /*    private static void dfs(int y, int x, int cost, boolean isBreak) {
         cache[y][x] = cost;
