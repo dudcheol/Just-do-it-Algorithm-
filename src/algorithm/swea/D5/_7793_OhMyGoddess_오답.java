@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class _7793_OhMyGoddess {
+public class _7793_OhMyGoddess_오답 {
     static int n, m;
     static char[][] map;
     static char[][] tmp;
