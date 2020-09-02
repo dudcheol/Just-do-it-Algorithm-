@@ -12,8 +12,8 @@ public class _1767_프로세서연결하기 {
 	static boolean[][] visited;
 	static int[][] corePos;
 	static int coreCnt;
-	static int[] selectCore;
-	static boolean[] isSelected;
+//	static int[] selectCore;
+//	static boolean[] isSelected;
 	static int[] dy = { -1, 1, 0, 0 }; // 상하좌우
 	static int[] dx = { 0, 0, -1, 1 }; // 상하좌우
 	static boolean[][] tmpMap;
@@ -31,9 +31,10 @@ public class _1767_프로세서연결하기 {
 			map = new int[N][N];
 			visited = new boolean[N][N];
 			corePos = new int[12][2]; // Core의 개수는 최소 1개 이상 12개 이하이다.
+			coreCnt = 0;
 			int idx = 0;
 			for (int i = 0; i < N; i++) {
-				StringTokenizer st = new StringTokenizer(br.readLine());
+				StringTokenizer st = new StringTokenizer(br.readLine().trim());
 				for (int j = 0; j < N; j++) {
 					map[i][j] = Integer.parseInt(st.nextToken());
 					if (map[i][j] == 1) {
@@ -44,8 +45,8 @@ public class _1767_프로세서연결하기 {
 					}
 				}
 			}
-			selectCore = new int[coreCnt];
-			isSelected = new boolean[coreCnt];
+//			selectCore = new int[coreCnt];
+//			isSelected = new boolean[coreCnt];
 			answer = Integer.MAX_VALUE;
 			maxConnectCore = Integer.MIN_VALUE;
 			tmpMap = new boolean[N][N];
@@ -55,30 +56,31 @@ public class _1767_프로세서연결하기 {
 			// 가장자리 전선은 이미 연결된 것으로 간주됨
 			// 7 ≤ N ≤ 12
 
-			choose(0);
+//			choose(0);
+			connect(0,0,0);
 
 			sb.append('#').append(test_case).append(' ').append(answer).append('\n');
 		}
 		System.out.print(sb);
 	}
 
-	// 먼저 연결할 코어 순서를 정함
-	private static void choose(int k) {
-		if (k == coreCnt) {
-			// 나열된 코어 연결 순서의 인덱스
-			connect(0, 0, 0);
-			return;
-		}
-
-		for (int i = 0; i < coreCnt; i++) {
-			if (isSelected[i])
-				continue;
-			isSelected[i] = true;
-			selectCore[k] = i;
-			choose(k + 1);
-			isSelected[i] = false;
-		}
-	}
+//	// 먼저 연결할 코어 순서를 정함
+//	private static void choose(int k) {
+//		if (k == coreCnt) {
+//			// 나열된 코어 연결 순서의 인덱스
+//			connect(0, 0, 0);
+//			return;
+//		}
+//
+//		for (int i = 0; i < coreCnt; i++) {
+//			if (isSelected[i])
+//				continue;
+//			isSelected[i] = true;
+//			selectCore[k] = i;
+//			choose(k + 1);
+//			isSelected[i] = false;
+//		}
+//	}
 
 	// 선택된 코어에서부터 전선 연결 시뮬레이션 시작
 	private static void connect(int coreIdx, int connectCnt, int lineCnt) {
@@ -97,8 +99,8 @@ public class _1767_프로세서연결하기 {
 		// 현재까지 연결된 전선에 앞으로 쭉 연결해도 maxConnectCore를 넘지못할 것이라면
 		// 현재 코어에서부터는 더 볼 필요가 없어진다
 		if (maxConnectCore != Integer.MIN_VALUE) {
-			int expectedCore = coreCnt - coreIdx - 1; // 앞으로 더 연결할 수 있는 코어 
-			if (maxConnectCore-2 > connectCnt + expectedCore) {
+			int expectedCore = coreCnt - coreIdx - 1; // 앞으로 더 연결할 수 있는 코어
+			if (maxConnectCore - 1 > connectCnt + expectedCore) {
 				return;
 			}
 		}
@@ -110,7 +112,7 @@ public class _1767_프로세서연결하기 {
 //				tmpMap = new boolean[N][N];
 //			}
 			// 전선 놓기
-			int[] cur = corePos[selectCore[coreIdx]];
+			int[] cur = corePos[coreIdx];
 			int y = cur[0];
 			int x = cur[1];
 			boolean isConnected = false;
