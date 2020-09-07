@@ -39,7 +39,10 @@ public class _2112_보호필름 {
 	}
 
 	private static void dfs(int k, int cnt) {
-		if (k == D) {			
+		if (cnt >= min)
+			return;
+		
+		if (k == D) {
 			loop: for (int i = 0; i < W; i++) {
 				int same = 1;
 				for (int j = 0; j < D - 1; j++) {
@@ -77,12 +80,6 @@ public class _2112_보호필름 {
 }
 
 /*
-1
-6 8 3
-0 0 1 0 1 0 0 1
-0 1 0 0 0 1 1 1
-0 1 1 1 0 0 0 0
-1 1 1 1 0 0 0 1
-0 1 1 0 1 0 0 1
-1 0 1 0 1 1 0 1
-*/
+ * 1 6 8 3 0 0 1 0 1 0 0 1 0 1 0 0 0 1 1 1 0 1 1 1 0 0 0 0 1 1 1 1 0 0 0 1 0 1 1
+ * 0 1 0 0 1 1 0 1 0 1 1 0 1
+ */
