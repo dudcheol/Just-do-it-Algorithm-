@@ -40,21 +40,8 @@ public class _2117_홈방범서비스 {
 				}
 			}
 
-			// 마름모모양 => 이하 거리로 판단
-			// 마름모모양으로 계속 퍼뜨려서 마름모크기, 이익 기록한다
-			// dfs로 계속 해보면서 이전 마름모크기보다 큰데 이익이 같으면 리턴?
-			// 집이 있는 위치 기준으로 퍼트려본다
-
-			// 각 집의 위치별로 bfs 실행?
+			// 마름모모양 => 무조건 BFS!! BFS가 다이아몬드 스텝이 가능함 (이거 하나만 알고있어도 크게 도움이 된다!!!)
 			q = new LinkedList<int[]>();
-//			for (int i = 0; i < houses.size(); i++) {
-//				int[] target;
-//				q.offer(target = houses.get(i));
-//				visited[target[0]][target[1]] = true;
-//				bfs();
-//				q.clear();
-//				visited = new boolean[N][N];
-//			}
 			
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
@@ -69,15 +56,6 @@ public class _2117_홈방범서비스 {
 			sb.append('#').append(test_case).append(' ').append(max == Integer.MIN_VALUE ? 1 : max).append('\n');
 		}
 		System.out.print(sb);
-		// 마름모모양 영역
-		// K가 커질수록 운영 비용 커짐
-		// 운영비용 == 서비스 영역의 면적 == K * K + (K - 1) * (K - 1)
-		// K >= 1 정수
-
-		// 배열을 벗어나도 운영 비용 변경되지 않음
-
-		// 홈 방범 서비스 받는 집은 M의 비용을 지불함
-		// 손해보지 않는 "최대한 많은 집에 방범 서비스 제공"
 
 	}
 
@@ -109,12 +87,10 @@ public class _2117_홈방범서비스 {
 			} // end of size while
 			// 서비스 전용면적 계산하기
 			K++;
+			if(K == 2*N) break;
 			if (calc(K, houseCnt) >= 0) { // 손해를 보지 않음
 				max = Math.max(max, houseCnt);
 			}
-//			else { // 손해를 봄
-//				return; // 더이상 계산하지 않는다.
-//			}
 		} // end of q empty
 	} // end of bfs
 
