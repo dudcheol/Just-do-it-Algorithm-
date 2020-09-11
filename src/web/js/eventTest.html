@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		function go(code) {
+			if (code == 1) {
+				alert('click!');
+			} else if (code == 2) {
+				alert('mouse over!')
+			} else if (code == 3) {
+				print(); //화면 인쇄 함수
+			} else if (code == 4) {
+				open('http://www.daum.net', '' ,'width=300px, height=200px'); // 새창 열기 popup
+			} else {
+				close(); // 화면을 닫아주는 함수
+			}
+		}
+	</script>
+</head>
+<body>
+	<!-- onclick : EVENT HANDLER 사건이 발생하면 처리해주는 담당자 -->
+	<input type="button" value="click" onclick="go(1)">
+	<input type="button" value="mouseOver" onmouseover="go(2)">
+	<input type="button" value="print" onclick="go(3)">
+	<input type="button" value="open" onclick="go(4)">
+	<input type="button" value="close" onclick="go(5)">
+</body>
+</html>

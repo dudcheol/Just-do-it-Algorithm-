@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('button:eq(0)').on('click', function() {
+			var h1 = $('<h1>hello</h1>'); // <h1>hello</h1>엘리먼트 한개가 만들어 짐
+			
+			/* $('div').append(h1); */
+			h1.appendTo($('div'));
+		});
+		
+		// 이벤트에 의해 생겨난 엘리먼트는 dom tree에 반영되어 있지 않음
+		// 처음 html문서 로딩시에는 h1태그가 존재하지 않지만
+		// 나중에 이벤트로 div 태그의 자식으로 h1이 생겨남
+		// 그 생겨난 h1태그에 대해 click 이벤트를 등록시킴
+		// $(staticParent).on(eventName, dynamicChild, eventHandler);
+		// 시험문제 나올 수 있음!!!!!
+		$('div').on('click', 'h1', function() { // click 이벤트를 div에 붙이는 것이 아니고, div의 자식으로 h1이
+			/* alert('welcome!'); */					// 생겨난다면, 그 h1에게 click 이벤트를 붙이겠다 라는 뜻임
+			$(this).css('color', 'red');
+		});
+	});
+</script>
+</head>
+<body>
+	<button>add</button>
+	<div></div>
+</body>
+</html>

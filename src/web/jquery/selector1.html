@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	//document(html)가 준비가 되면 query를 실행하겠다는 뜻
+	$(document).ready(function(){
+		$('h1').css('color', 'red');
+		$('h2').css('color', 'pink');
+		$('h1').css('font-size', '30pt');
+		$('#green').css('color', 'green');
+		$('.orange').css('color', 'orange');
+		$('p').css({'background-color':'yellow', 'font-size':'200%'});
+		
+		// form 태그 안에서 사용되는 태그는 :type 으로 바로 찾을 수 있음
+		$(':text').val('hello');
+		$(':password').css('border', '2px solid red');
+		$('[href]').css('text-decoration', 'none').css('color', 'magenta');// method chaining
+		
+		
+	}); 
+	
+	
+</script>
+</head>
+<body>
+	<form action="">
+		id : <input type="text" id="id"><br>
+		pw : <input type="password" id="pass"><br>
+		<a href="#">gogo</a>
+	</form>
+	
+	<hr>
+	<p>this is p tag</p>
+	<h1>this is first h1 tag</h1>
+	<h1>this is second h1 tag</h1>
+
+	<h2>tommy page</h2>
+	<h2>harry potter</h2>
+	<h2>bill jones</h2>
+
+	<h1 class="orange">this is orange</h1>
+	<h1 id="green">this is green</h1>
+</body>
+</html>

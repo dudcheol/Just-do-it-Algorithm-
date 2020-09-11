@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function process(that) {
+		var value = that.id;
+		var pcode = value.substring(0,5);
+		var addr = value.substring(5);
+		
+		/* var postcode = opener.document.getElementById('addr'); */ // opener : 현재 창을 열어준 놈!
+		var address = opener.document.getElementById('addr');
+		address.value = pcode + addr;
+		
+		// 자기 창은 닫기
+		close();
+	}
+</script>
+</head>
+<body>
+	<h1>주소 찾기</h1>
+	<a href="#" id="12345 서울시 종로구" onclick="process(this)">12345 서울시 종로구</a><br>
+	<a href="#" id="13488 서울시 중구" onclick="process(this)">13488 서울시 중구</a><br>
+	<a href="#" id="21345 서울시 영등포구" onclick="process(this)">21345 서울시 영등포구</a><br>
+</body>
+</html>

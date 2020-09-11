@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		// 자바스크립트에서는 함수도 하나의 데이터 타입으로 인식함
+		// 2. 익명 함수 작성 : 이름이 없는 함수
+		
+		// 함수를 변수에 저장 가능
+		var num = 99;
+		var ff = function(num) {
+			console.log(--num);
+		}
+		
+		console.log(typeof num);
+		console.log(typeof ff);
+		
+		// 2) 함수를 파라메터로 사용 가능
+		var f1 = function() {
+			console.log('f1 hello');
+		}
+		f1();
+		
+		function f2() {
+			console.log('f2 hello');
+		}
+		
+		function funtest(some) {
+			some(); // f1()
+		}
+		
+		funtest(f1);
+		funtest(f2);
+		
+		// 3) 함수를 리턴값으로 사용 가능
+		function funtest2() {
+			return function() {
+				console.log('return func!!')
+			}
+		}
+		
+		var re = funtest2();
+		re();
+		funtest2()();
+	
+	</script>
+</head>
+<body>
+
+</body>
+</html>

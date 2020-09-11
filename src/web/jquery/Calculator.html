@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	var nums = [ 7, 8, 9, '+', 4, 5, 6, '-', 1, 2, 3, '*', 0, -1, -1, '/' ];
+	var input = '';
+
+	$(document).ready(function() {
+		console.log($('#pad button'));
+
+		$('#pad button').each(function(index, item) {
+			if (!(nums[index] == -1)) {
+				console.log('숫자' + item);
+				$(item).on('click', function() {
+					input += this.innerText;
+					console.log(input);
+					setFormula(input);
+				});
+			}
+		});
+	});
+
+	function reset() {
+		input = '';
+		setFormula('');
+	}
+
+	function calc() {
+		var form = $('#formula').val() + 'E';
+		var res = 0;
+		var first = true;
+		var target = '';
+		var curOp = '';
+		for (var i = 0; i < form.length; i++) {
+			var cur = parseFloat(form[i]);
+			if (!isNaN(cur)) {
+				target += cur;
+			} else {
+				if (first) {
+					res = parseInt(target);
+					first = false;
+					op = form[i];
+					target = '';
+					continue;
+				}
+				switch (op) {
+				case '+':
+					res += parseInt(target);
+					break;
+				case '-':
+					res -= parseInt(target);
+					break;
+				case '*':
+					res *= parseInt(target);
+					break;
+				case '/':
+					res /= parseInt(target);
+					break;
+				}
+				op = form[i];
+				target = '';
+			}
+		}
+		if(isNaN(res)){
+			res = 'Error!';
+		}
+		setFormula(res);
+		input = '';
+	}
+
+	function addOper(op) {
+
+	}
+
+	function setFormula(result) {
+		$('#formula').val(result);
+	}
+</script>
+<style type="text/css">
+#calc {
+	border: 1px solid gray;
+	width: 350px;
+	text-align: center;
+}
+
+#formula {
+	text-align: right;
+	width: 80%;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+#resultDiv {
+	text-align: left;
+	margin-left: 40px;
+}
+
+button {
+	width: 70px;
+	height: 70px;
+}
+</style>
+</head>
+<body>
+	<div id="calc">
+		<input type="text" id="formula" value="" placeholder="0.0" readonly />
+		<div id="pad">
+			<button>7</button>
+			<button>8</button>
+			<button>9</button>
+			<button>+</button>
+			<button>4</button>
+			<button>5</button>
+			<button>6</button>
+			<button>-</button>
+			<button>1</button>
+			<button>2</button>
+			<button>3</button>
+			<button>*</button>
+			<button>0</button>
+			<button onclick="reset()">CE</button>
+			<button onclick="calc()">=</button>
+			<button onclick="addOper('/')">/</button>
+		</div>
+		<div id="resultDiv">
+			<h2>결 과 이 력</h2>
+			<p id="result"></p>
+		</div>
+	</div>
+
+</body>
+</html>

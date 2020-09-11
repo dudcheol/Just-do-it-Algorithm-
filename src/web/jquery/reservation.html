@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>영화 예매</title>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var price = 9000;
+		var people = 1;
+		var totalPrice = price * people;
+		var option = 0;
+
+		$('#early').css('display', 'none');
+		$('#ordinary').css('display', 'inline');
+		$('#option').css('display', 'none');
+		$('#price').val(price * people + option);
+
+		$('input[name=time]').each(function(index, item) {
+			$(item).on('click', function() {
+				if (item.checked && item.value == '08:30') {
+					$('#early').css('display', 'inline');
+					$('#ordinary').css('display', 'none');
+					price = 5000;
+				} else {
+					$('#early').css('display', 'none');
+					$('#ordinary').css('display', 'inline');
+					price = 9000;
+				}
+				setTotalPrice();
+			});
+		});
+
+		$('#people').on('click', function() {
+			people = this.value;
+			setTotalPrice();
+		});
+
+		$('#op').on('click', function() {
+			if (this.checked) {
+				$('#option').css('display', 'block');
+			} else {
+				$('#option').css('display', 'none');
+			}
+		});
+
+		$('input[name=popcorn]').on('click', function() {
+			if (this.checked) {
+				option += 6000;
+			} else {
+				option -= 6000;
+			}
+			setTotalPrice();
+		});
+		
+		$('input[name=cola]').on('click', function() {
+			if (this.checked) {
+				option += 3000;
+			} else {
+				option -= 3000;
+			}
+			setTotalPrice();
+		});
+		
+		function setTotalPrice() {
+			return $('#price').val((price * people) + option);
+		}
+	});
+</script>
+</head>
+<body>
+	<h1>영화 예매</h1>
+	<h2>쿵푸팬더</h2>
+	<img alt="쿵푸팬더 poster" width="300" height="400" src="./img/movie_image2.jpg">
+	<form>
+		<label>상영관</label>
+		<select>
+			<option>CGV</option>
+			<option>롯데시네마</option>
+			<option>메가박스</option>
+			<option>프리머스</option>
+			<option>다른극장</option>
+		</select>
+
+		<label>날짜 선택</label> <input type="date" />
+		<fieldset>
+			<legend>시간선택</legend>
+			<label><input type="radio" name="time" value="08:30" class="time" />08:30</label> <label><input type="radio" name="time" value="11:00" class="time" checked="checked" />11:00</label> <label><input type="radio" name="time" value="14:20" class="time" />14:20</label> <label><input type="radio" name="time" value="17:25" class="time" />17:25</label> <label><input type="radio" name="time" value="20:10" class="time" />20:10</label> <label><input type="radio" name="time" value="23:05" class="time" />23:05</label>
+		</fieldset>
+		<p />
+
+		<label>요금</label>&nbsp;&nbsp; <span id="early"> <del>W9,000</del>&nbsp;&nbsp; <ins>W5,000</ins></span> <span id="ordinary">W9,000</span>
+		<p />
+		<input type="hidden" id="cost" value="9000" /> <label>인원</label> <input type="number" required="required" id="people" value="1" />
+		<p />
+		<label>금액</label> <input type="number" readonly="readonly" id="price" value="0" />
+		<p>
+
+			<label><input type="checkbox" id="op" />옵션</label>
+		<div id="option">
+			<fieldset>
+				<label><input type="checkbox" name="popcorn" />팝콘</label> <label><input type="checkbox" name="cola" />콜라</label>
+			</fieldset>
+		</div>
+	</form>
+</body>
+</html>

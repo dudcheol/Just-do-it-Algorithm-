@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// 1. event 처리
+/* 		$('h1').click(function() {
+			alert($(this).html()); //$(this): 사건이 발생한 대상. h1 
+		}); */
+		
+		$('h1').on('click', function() {
+			alert($(this).html() + ' on_click');
+		})
+		
+		$('h1:eq(1)').off('click');
+		
+		$('h1').mouseenter(function() {
+			$(this).addClass('reverse');
+		});
+		
+		$('h1').mouseleave(function() {
+			$(this).removeClass('reverse');
+		});
+		
+		//$('h1').mouseenter();
+		//$('h1').mouseleave();
+	});
+</script>
+</head>
+<body>
+	<h1>header - 0</h1>
+	<h1>header - 1</h1>
+	<h1>header - 2</h1>
+</body>
+</html>
