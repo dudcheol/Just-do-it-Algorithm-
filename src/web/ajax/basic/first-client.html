@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var xhr = null;
+	
+	// 1. ajax 통신에 필요한 객체(XMLHttpRequest:XHR)를 생성하는 함수
+	function getXHR(){
+		if(window.XMLHttpRequest){
+			xhr = new XMLHttpRequest();
+		} else { // ie6 이하 
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+	}
+	
+	// 2. 만들어진 XHR을 가지고 AJAX 요청을 서버로 보내는 함수
+	function getData() {		
+		getXHR();
+		
+		// ajax 요청을 위한 준비작업(get, post:서버로 요청하는 방식지정 / frist-server.jsp:server / true: 비동기 여)
+		xhr.open('get', 'first-server.jsp', true);
+		
+		// callback함수 지정(xhr이 가진 readyState데이터가 바뀔 때마다 실행할 함수)
+		xhr.onreadystatechange = callback; // 여기서 만약에 callback()을 넣으면 이건 callback을 실행하라는 의미다
+		
+		xhr.send(null); // 서버로 요청을 보냄(get방식으로 요청할 때는 null)
+	}
+	
+	function postData() {		
+		getXHR();
+		xhr.open('post', 'first-server.jsp', true); // 준비
+		xhr.onreadystatechange = callback;
+		xhr.send(); // post 방식은 비워서 보냄
+	}
+	
+	// 3. 서버한테서 응답이 도착하면 그 결과를 처리하는 함수
+	function callback() {
+		var result = document.getElementById('ta');
+		if(xhr.readyState == 4 && xhr.status == 200){
+			result.value = xhr.responseText; // server가 보내준 데이터를 text형식으로 받을 때
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>ajax test</h1>
+	<button onclick="getData()">ajax-getData</button>
+	<button onclick="postData()">ajax-postData</button>
+	<hr>
+	<textarea rows="10" cols="30" id="ta"></textarea>
+</body>
+</html>

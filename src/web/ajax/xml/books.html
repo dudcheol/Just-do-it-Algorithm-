@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var xhr = null;
+
+	function getXHR() {
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+	}
+
+	function getData() {
+		getXHR();
+		xhr.open('get', 'books.xml', true);
+		xhr.onreadystatechange = callback;
+		xhr.send(null);
+	}
+
+	function callback() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var result = document.getElementById('result');
+			var xml = xhr.responseXML; // server로부터 결과를 xml형식으로 받아옴 => parsing이 가능해짐
+			var books = xml.getElementsByTagName('book');
+			var msg = "";
+			for (var i = 0; i < books.length; i++) {
+				var book = books[i];
+
+				var titles = book.getElementsByTagName('title');
+				var authors = book.getElementsByTagName('author');
+
+				// DOM트리에 있는 것은 다~ 노드이므로, value를 가져와야 함
+				var title = titles[0].firstChild.nodeValue;
+				var author = authors[0].firstChild.nodeValue;
+
+				msg = msg + "<span style='color:green'>title</span> : " + title
+						+ " / <span style='color:blue'>author</span> : "
+						+ author + "<hr>";
+			}
+			result.innerHTML = msg;
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>ajax xml test</h1>
+	<button onclick="getData()">get Data</button>
+	<hr>
+	<div id="result"></div>
+</body>
+</html>
