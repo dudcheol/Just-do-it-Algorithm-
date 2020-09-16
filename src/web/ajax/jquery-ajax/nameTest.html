@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Ajax 4</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				$('button').click(
+						function() {
+							$.ajax({
+								url : 'nameTest.jsp',
+								success : function(result) {
+									// 서버로부터 불필요한 글자가 함께오는 경우가 있다 (줄바꿈이라던지..)
+									// 따라서 trim 처리 꼭 해주자!
+									if (result.trim() == 'true') {
+										$('#longNames').html(
+												$('#longNames').html()
+														+ $('#name').val()
+														+ "<br>");
+									} else {
+										$('#shortNames').html(
+												$('#shortNames').html()
+														+ $('#name').val()
+														+ "<br>");
+									}
+								},
+								data : {
+									name : $('#name').val()
+								}
+							});
+						});
+			});
+</script>
+<style type="text/css">
+div {
+	display: inline-block;
+	overflow: auto;
+}
+
+div.short {
+	border: 2px solid blue;
+	width: 250px;
+	height: 250px;
+}
+
+div.long {
+	border: 2px solid red;
+	width: 250px;
+	height: 250px;
+}
+</style>
+
+</head>
+<body>
+	<p>Please introduce yourself by entering your name in the box below</p>
+	<input type='text' size='24' id='name'></input>&nbsp;
+	<button>Submit</button>
+	<br>
+	<br>
+
+	<div id='shortNames' class='short'>
+		<h5>People I've met with short names</h5>
+		<hr />
+	</div>
+
+	<div id='longNames' class='long'>
+		<h5>People I've met with long names</h5>
+		<hr />
+	</div>
+
+
+</body>
+</html>

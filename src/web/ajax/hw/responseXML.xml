@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<curriculum>
+  <subject>
+    <num>101</num>
+	<title>JAVA</title>
+	<room>801</room>
+  </subject>
+  <subject>
+    <num>103</num>
+	<title>Javascript</title>
+	<room>503</room>
+  </subject>
+  <subject>
+    <num>219</num>
+	<title>Ajax</title>
+	<room>505</room>
+  </subject>
+  <subject>
+    <num>301</num>
+	<title>Spring Framework</title>
+	<room>402</room>
+  </subject>
+   <subject>
+    <num>402</num>
+	<title>BootStrap</title>
+	<room>403</room>
+  </subject>
+</curriculum>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//$('button:eq(0), button:eq(1)')
+		$('button').click(function() {
+			// ajax 요청 처리
+			$.ajax({
+				url : 'first-server.jsp',
+				success : function(result, status, xhr) { // 성공시에 실행되는 
+					$('#ta').val(result + ":" + status);
+				},
+				error: function(xhr, status, error){
+					$('#ta').val(status + ":" + xhr.status);
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>ajax test</h1>
+	<button>ajax-getData</button>
+	<button>ajax-postData</button>
+	<hr>
+	<textarea rows="10" cols="30" id="ta"></textarea>
+</body>
+</html>

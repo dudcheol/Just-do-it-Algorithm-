@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var xhr = null;
+
+	function getXHR() {
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else { // ie6 이하 
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+	}
+
+	function arrayData() {
+		getXHR();
+		xhr.open('get', 'jsonarray.jsp', true);
+		xhr.onreadystatechange = callback;
+		xhr.send(null);
+	}
+
+	function callback() {
+		var result = document.getElementById('arrayDisplay');
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var json = eval("(" + xhr.responseText + ")"); // 문자열을 json객체로 바꿔줌
+			var msg = "";
+			for (var i = 0; i < json.length; i++) {
+				msg += json[i] + "<br>";
+			}
+			result.innerHTML = msg;
+		}
+	}
+
+	function collectionData1() {
+		getXHR();
+		xhr.open('get', 'jsoncollection.jsp', true);
+		xhr.onreadystatechange = callback2;
+		xhr.send(null);
+	}
+
+	function callback2() {
+		var result = document.getElementById('collectionDisplay1');
+		var code = document.getElementById('code');
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var json = eval("(" + xhr.responseText + ")"); // 문자열을 json객체로 바꿔줌
+			var country = json[code.value];
+			result.innerHTML = country == null ? '찾을 수 없습니다' : country;
+		}
+	}
+
+	function collectionData2() {
+		getXHR();
+		xhr.open('get', 'jsoncollection2.jsp', true);
+		xhr.onreadystatechange = callback3;
+		xhr.send(null);
+	}
+
+	function callback3() {
+		var result = document.getElementById('collectionDisplay2');
+		var code = document.getElementById('code2');
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var json = eval("(" + xhr.responseText + ")"); // 문자열을 json객체로 바꿔줌
+
+			var info = json[code.value];
+
+			var msg = "";
+			if (info == null) {
+				result.innerHTML = 'No Data';
+				return;
+			}
+			for ( var key in info) {
+				msg += info[key] + "<br>";
+			}
+			result.innerHTML = msg;
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>json array data</h1>
+	<button onclick="arrayData()">get array data</button>
+	<div id="arrayDisplay"></div>
+	<hr>
+
+	<h1>json collection data1</h1>
+	code:
+	<input type="text" id="code">
+	<button onclick="collectionData1()">get collection data1</button>
+	<div id="collectionDisplay1"></div>
+
+	<h1>json collection data2</h1>
+	code:
+	<input type="text" id="code2">
+	<button onclick="collectionData2()">get collection data2</button>
+	<div id="collectionDisplay2"></div>
+</body>
+</html>

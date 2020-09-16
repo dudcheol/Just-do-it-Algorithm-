@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('button').click(function() {
+			$.ajax({
+				url:'paramTest.jsp',
+				success:function(result){
+					$('#result').html(result); // == innerHTML
+				},
+				data:{ // 서버로 보낼 파라미터
+					name: $('#name').val(),
+					address: $('#address').val()
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>ajax param test</h1>
+	name:
+	<input type="text" id="name">
+	<br> address:
+	<input type="text" id="address">
+	<br>
+	<button id="button">send Get</button>
+	<hr>
+	<div id="result"></div>
+</body>
+</html>
