@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/MyWeb/FormTestServlet" id="f" method="get">
+		<fieldset>
+			<legend>로그인 정보</legend>
+			<ul>
+				<li>아이디:<input type="text" id="id" name="id">
+				</li>
+
+				<li>비밀번호:<input type="password" id="pass" name="pass"> <span id="msg"></span>
+				</li>
+			</ul>
+		</fieldset>
+
+		<hr>
+		<!-- <fieldset>
+			<legend>취미</legend>
+			독서<input type="checkbox" name="hobby" value="reading"><br>
+			영화보기<input type="checkbox" name="hobby" value="movie"><br>
+			게임하기]<input type="checkbox" name="hobby" value="game"><br>
+			잠자기<input type="checkbox" name="hobby" value="sleeping"><br>
+		</fieldset> -->
+		
+		<fieldset>
+			<legend>취미</legend>
+			독서<input type="radio" name="hobby" value="reading"><br>
+			영화보기<input type="radio" name="hobby" value="movie"><br>
+			게임하기]<input type="radio" name="hobby" value="game"><br>
+			잠자기<input type="radio" name="hobby" value="sleeping"><br>
+		</fieldset>
+
+		<input type="submit" value="send"> <input type="reset" value="clear">
+	</form>
+
+</body>
+</html>
+
+
+
+
+
+
