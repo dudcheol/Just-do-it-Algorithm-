@@ -6,6 +6,9 @@ import java.util.StringTokenizer;
 
 public class _4613_러시아국기같은깃발 {
 
+	private final static int WHITE = 0;
+	private final static int BLUE = 1;
+	private final static int RED = 2;
 	private static int[][] memo;
 	private static char[][] map;
 	private static int m;
@@ -42,30 +45,48 @@ public class _4613_러시아국기같은깃발 {
 				}
 			}
 
-			int[][] D = new int[n][2];
+			min = Integer.MAX_VALUE;
 
-			int init = 0;
-			init += memo[0][0];
-			for (int i = 1; i < n - 1; i++) {
-				init += memo[i][1];
-			}
-			init += memo[n - 1][2];
-			
-			D[0][0] = init; // 흰색을 늘림
-			D[0][1] = init; // 빨강을 늘림
-
-			min = init;
-			for (int i = 1; i < n - 2; i++) {
-				D[i][0] = D[i - 1][0] + memo[i][0] - memo[i][1];
-				D[i][1] = D[i - 1][1] + memo[n - 1 - i][2] - memo[n - 1 - i][1];
-				
-				min = Math.min(min, D[i][0]);
-				min = Math.min(min, D[i][1]);
-			}
+			func(1, WHITE, memo[0][0]); // 0 번째는 무조건 흰색이므로 1부터 시작
 
 			sb.append('#').append(test_case).append(' ').append(min).append('\n');
 		}
 		System.out.println(sb);
+	}
+
+	private static void func(int k, int pre, int cnt) {
+//		if (cnt >= min) {
+//			return;
+//		}
+
+		if (k == n) { // 마지막줄은 무조건 빨강
+			min = Math.min(min, cnt);
+			return;
+		}
+
+		if (pre == WHITE) { // 전이 흰색이면 흰,파 가능
+			if (k < n - 2) {
+				func(k + 1, WHITE, cnt + memo[k][0]);
+			}
+			if (k < n - 1) {
+				func(k + 1, BLUE, cnt + memo[k][1]);
+			}
+		}
+
+		else if (pre == BLUE) { // 전이 파랑이면 파,빨 가능
+			if (k < n - 1) {
+				func(k + 1, BLUE, cnt + memo[k][1]);
+			}
+			if (2 <= k && k < n) {
+				func(k + 1, RED, cnt + memo[k][2]);
+			}
+		}
+
+		else if (pre == RED) { // 전이 빨강이면 빨만 가능
+			if (2 <= k && k < n) {
+				func(k + 1, RED, cnt + memo[k][2]);
+			}
+		}
 	}
 
 }
