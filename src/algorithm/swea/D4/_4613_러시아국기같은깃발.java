@@ -42,34 +42,30 @@ public class _4613_러시아국기같은깃발 {
 				}
 			}
 
-			min = Integer.MAX_VALUE;
+			int[][] D = new int[n][2];
 
-			func(1, memo[0][0]); // 0 번째는 무조건 흰색이므로 1부터 시작
+			int init = 0;
+			init += memo[0][0];
+			for (int i = 1; i < n - 1; i++) {
+				init += memo[i][1];
+			}
+			init += memo[n - 1][2];
+			
+			D[0][0] = init; // 흰색을 늘림
+			D[0][1] = init; // 빨강을 늘림
+
+			min = init;
+			for (int i = 1; i < n - 2; i++) {
+				D[i][0] = D[i - 1][0] + memo[i][0] - memo[i][1];
+				D[i][1] = D[i - 1][1] + memo[n - 1 - i][2] - memo[n - 1 - i][1];
+				
+				min = Math.min(min, D[i][0]);
+				min = Math.min(min, D[i][1]);
+			}
 
 			sb.append('#').append(test_case).append(' ').append(min).append('\n');
 		}
 		System.out.println(sb);
-	}
-
-	private static void func(int k, int cnt) {
-		if(cnt >= min) {
-			return;
-		}
-		
-		if (k == n) { // 마지막줄은 무조건 빨강
-			min = Math.min(min, cnt);
-			return;
-		}
-
-		if (k < n - 2) { // 흰색으로 변경 가능
-			func(k + 1, cnt + memo[k][0]);
-		}
-		if (k < n - 1) {
-			func(k + 1, cnt + memo[k][1]);
-		}
-		if (2 <= k && k < n) {
-			func(k + 1, cnt + memo[k][2]);
-		}
 	}
 
 }
