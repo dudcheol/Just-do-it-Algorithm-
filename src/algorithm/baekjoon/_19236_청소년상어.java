@@ -43,15 +43,15 @@ public class _19236_청소년상어 {
 	}
 
 	private static void simulate(int sy, int sx, int dir, int sum) {
-		System.out.println("shark move");
-		System.out.println("eat : " + sum);
+//		System.out.println("shark move");
+//		System.out.println("eat : " + sum);
 		max = Math.max(max, sum);
 //		map[sy][sx].num = 0;
-		print();
+//		print();
 		// 물고기 이동
-		moveFish();
-		System.out.println("fish move");
-		print();
+		moveFish(sy, sx);
+//		System.out.println("fish move");
+//		print();
 
 		// 물고기 이동끝나면 상어가 이동
 		int ny = sy;
@@ -66,7 +66,7 @@ public class _19236_청소년상어 {
 			// 물고기 있는 칸으로 이동-> 그 칸에 있는 물고기 먹음, 그 물고기가 가졌던 방향을 가짐
 			Fish[][] tmp = copyMap();
 			int n = map[ny][nx].num;
-			map[ny][nx].num = 0;
+			map[ny][nx].num = 0; // 물고기 먹음
 			simulate(ny, nx, map[ny][nx].dir, sum + n);// 상어가 이동한 후 다시 물고기 이동하고 과정 반복
 			map = tmp;
 		}
@@ -94,7 +94,7 @@ public class _19236_청소년상어 {
 		System.out.println("------------------------------");
 	}
 
-	private static void moveFish() {
+	private static void moveFish(int sy, int sx) {
 		// 물고기 한 칸 이동
 		// 이동할 수 없는 칸 : 상어가 있는 칸, 경계를 넘어가는 칸
 		// 물고기는이동할 수 있는 칸을 찾을 때 까지 45도 반시계 회전하며 찾음 -> 없으면 이동하지 않음
@@ -109,11 +109,13 @@ public class _19236_청소년상어 {
 						for (int k = 0; k < 8; k++) {
 							int ny = i + dy[dir];
 							int nx = j + dx[dir];
-							dir = (dir + 1) % 8;
-							if (ny < 0 || nx < 0 || ny >= 4 || nx >= 4 || map[ny][nx].num == 0)
+							if (ny < 0 || nx < 0 || ny >= 4 || nx >= 4 || (ny == sy && nx == sx)) {
+								// 맵을 벗어나거나, 상어의 위치이면 이동할 수 없음 -> 방향을 바꾸고 다시 시도
+								dir = (dir + 1) % 8;
 								continue;
+							}
 							int tmpnum = map[i][j].num;
-							int tmpdir = map[i][j].dir;
+							int tmpdir = dir; // !!!! 오답원인 !!!! : 변경된 물고기 방향을 적용해주지 않았음
 							map[i][j].num = map[ny][nx].num;
 							map[i][j].dir = map[ny][nx].dir;
 							map[ny][nx].num = tmpnum;
