@@ -8,8 +8,14 @@ import java.util.StringTokenizer;
 // 이 문제는 완전그래프를 사용하므로 간선 위주의 "크루스칼"보다는 정점 위주의 "프림"이 훨씬 낫다.
 public class _1251_하나로_프림 {
 
-	private static int N;
-	private static long[][] adjMatrix;
+	private static int N; // 섬의 수
+	private static double E;
+	private static int[] x;
+	private static int[] y;
+	private static boolean[] visited;
+	private static double answer;
+	private static double[] minEdge;
+	private static double[][] costs;
 
 	public static void main(String[] args) throws Exception {
 
@@ -20,54 +26,81 @@ public class _1251_하나로_프림 {
 		for (int test_case = 1; test_case <= TC; test_case++) {
 			N = Integer.parseInt(br.readLine());
 
-			int[] x = new int[N];
-			int[] y = new int[N];
+			x = new int[N];
+			y = new int[N];
 
-			StringTokenizer st = new StringTokenizer(br.readLine());
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 			for (int i = 0; i < N; i++) {
 				x[i] = Integer.parseInt(st.nextToken());
 			}
 
-			st = new StringTokenizer(br.readLine());
+			st = new StringTokenizer(br.readLine(), " ");
 			for (int i = 0; i < N; i++) {
 				y[i] = Integer.parseInt(st.nextToken());
 			}
 
-			adjMatrix = new long[N][N];
+			E = Double.parseDouble(br.readLine());
+
+			// i->j로 가는 비용 초기화
+			costs = new double[N][N];
+			for (int i = 0; i < N; i++) {
+				for (int j = i + 1; j < N; j++) {
+					costs[i][j] = costs[j][i] = (Math.pow(x[i] - x[j], 2) + Math.pow(y[i] - y[j], 2)) * E;
+				}
+			}
+
+			visited = new boolean[N];
+			minEdge = new double[N];
+
+			Arrays.fill(minEdge, Double.MAX_VALUE);
+
+			answer = 0;
+
+			makeMST();
+
+			sb.append('#').append(test_case).append(' ').append(Math.round(answer)).append('\n');
+		}
+
+		System.out.print(sb);
+	}
+
+	private static void makeMST() {
+
+		minEdge[0] = 0.0; // 시작점 최소간선비용은 0
+
+		for (int c = 0; c < N; c++) { // MST 정점 n개 , 간선 n-1개
+
+			// 신장트리에 포함되지 않은 정점 중 최소간선비용의 정점 찾기
+			double min = Double.MAX_VALUE;
+			int minVertex = 0;
 
 			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					adjMatrix[i][j] = adjMatrix[j][i] = getDistance(x[i], x[j], y[i], y[j]);
+				if (visited[i] || min <= minEdge[i]) // minEdge보다 min이 작거나 같으면 볼 필요없음(최소를 찾는 것이므로)
+					continue;
+
+//				int _x = x[i];
+//				int _y = y[i];
+//				// c -> i 환경부담금
+//				double tax = (Math.pow(x[c] - _x, 2) + Math.pow(y[c] - _y, 2)) * E;
+//
+//				if (min > tax) {
+//					min = tax;
+//					minVertex = i;
+//				}
+				min = minEdge[i];
+				minVertex = i;
+			}
+
+			answer += min;
+			visited[minVertex] = true;
+
+			// 선택된 최소비용정점 기준으로 신장트리에 포함되지 않은 다른 정점으로의 비용 계산하여 최소값 갱신
+			for (int i = 0; i < N; i++) {
+				if (!visited[i] && minEdge[i] > costs[minVertex][i]) {
+					minEdge[i] = costs[minVertex][i];
 				}
-			}// 인접행렬 완성 
+			}
 
-			double E = Double.parseDouble(br.readLine());
-
-			sb.append('#').append(test_case).append(' ').append(Math.round(E * makeMST())).append('\n');
 		}
 	}
-
-	private static long makeMST() {
-		boolean[] visited = new boolean[N];
-		
-		long result = 0;
-		int cnt = 0;
-		
-		Arrays.fill(minEdge, Long.MAX_VALUE);
-		
-		
-		return 0;
-	}
-
-	private static long getDistance(int x1, int x2, int y1, int y2) {
-		return (long) (Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-	}
-
 }
-
-/*
- * #1 10000 #2 180000 #3 1125000 #4 1953913 #5 27365366 #6 337122 #7
- * 711268755613 #8 280157 #9 521568761 #10 34 #11 375890356686 #12 68427157 #13
- * 21404 #14 16620885 #15 4776395492 #16 54860981981 #17 24236206202 #18 132410
- * #19 12876964085 #20 7016649393
- */
