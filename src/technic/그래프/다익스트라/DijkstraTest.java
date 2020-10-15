@@ -1,4 +1,4 @@
-package technic.다익스트라;
+package technic.그래프.다익스트라;
 
 import java.io.BufferedReader;
 import java.io.IOException;

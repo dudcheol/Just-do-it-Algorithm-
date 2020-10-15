@@ -1,4 +1,4 @@
-package technic.프림;
+package technic.그래프.프림;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
