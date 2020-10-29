@@ -14,6 +14,8 @@ public class _1249_보급로_dp {
 	private static int[] dy = { -1, 1, 0, 0 };
 	private static int[] dx = { 0, 0, -1, 1 };
 	private static int[][] D;
+	private static boolean[][] visited;
+	private static int answer;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,6 +25,7 @@ public class _1249_보급로_dp {
 			N = Integer.parseInt(br.readLine());
 			map = new int[N][N];
 			D = new int[N][N];
+			visited = new boolean[N][N];
 			for (int i = 0; i < N; i++) {
 				String input = br.readLine();
 				for (int j = 0; j < N; j++) {
@@ -31,29 +34,43 @@ public class _1249_보급로_dp {
 				}
 			}
 
-			Queue<int[]> pq = new LinkedList<>();
-			pq.offer(new int[] { 0, 0 });
+			PriorityQueue<int[]> pq = new PriorityQueue<>((o1,o2)->{
+				return Integer.compare(o1[2], o2[2]);
+			});
+			pq.offer(new int[] { 0, 0, 0 });
 			D[0][0] = 0;
 
 			while (!pq.isEmpty()) {
 				int[] p = pq.poll();
 				int y = p[0];
 				int x = p[1];
+				int cost = p[2];
+				
+				if(D[y][x] < cost || visited[y][x])
+					continue;
+				
+				visited[y][x] = true;
+				
+				if(y==N-1 && x==N-1) {
+					answer = cost;
+					break;
+				}
 
 				for (int d = 0; d < 4; d++) {
 					int ny = y + dy[d];
 					int nx = x + dx[d];
 
-					if (ny < 0 || nx < 0 || ny >= N || nx >= N)
+					if (ny < 0 || nx < 0 || ny >= N || nx >= N || visited[ny][nx])
 						continue;
 					
-					if(D[ny][nx] > D[y][x] + map[ny][nx]) {
-						D[ny][nx] = D[y][x] + map[ny][nx];
-						pq.offer(new int[] { ny, nx });
+					if(D[ny][nx] > cost + map[ny][nx]) {
+						D[ny][nx] = cost + map[ny][nx];
+						pq.offer(new int[] { ny, nx, D[ny][nx] });
 					}
 				}
 			}
-			sb.append('#').append(test_case).append(' ').append(D[N-1][N-1]).append('\n');
+//			sb.append('#').append(test_case).append(' ').append(D[N-1][N-1]).append('\n');
+			sb.append('#').append(test_case).append(' ').append(answer).append('\n');
 		}
 		System.out.print(sb);
 	}
