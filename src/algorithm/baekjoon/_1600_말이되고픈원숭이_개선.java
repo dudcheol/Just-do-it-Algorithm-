@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 
-public class _1600_말이되고픈원숭이_개선 {
+public class _1600_말이되고픈원숭이_개선 {
 	static int[] di={-1,0,1,0, -2,-1,1,2,2,1,-1,-2};//상우하좌
 	static int[] dj={0,1,0,-1, 1,2,2,1,-1,-2,-2,-1};
 	static int K,W,H,map[][];
