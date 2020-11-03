@@ -6,7 +6,7 @@ import java.util.*;
 public class _5656_벽돌깨기 {
 
 	static int N, W, H, map[][];
-	static boolean[][] visited;
+//	static boolean[][] visited;
 	static int[] dy = { -1, 1, 0, 0 };
 	static int[] dx = { 0, 0, -1, 1 };
 	private static int min;
@@ -42,37 +42,58 @@ public class _5656_벽돌깨기 {
 
 	}
 
-	private static void dfs(int k) {
-		if (k == N) {
-			// 남은 블록의 수 세기
-			int cnt = 0;
-			for (int i = 0; i < H; i++) {
-				for (int j = 0; j < W; j++) {
-					if(map[i][j] != 0) {
-						cnt++;
-					}
-				}
-			}
-			min = Math.min(min, cnt);
-			return;
+	private static boolean dfs(int k) {
+		int result = getRemain();// 남은 블록의 수 세기
+		
+		if(result == 0) {
+			min = 0;
+			return true; // 더이상 부술 벽돌이 없는 경우 dfs를 더 진행할 필요 없다
 		}
 		
-		int[][] tmp = deepcopy(map);
+		if (k == N) {
+			min = Math.min(min, result);
+			return false;
+		}
+
+		int[][] tmp = new int[H][W];
+		deepcopy(map, tmp);
 
 		for (int i = 0; i < W; i++) {
-			visited=new boolean[H][W];
 			bfs(i);
-			dfs(k+1);
-			map = deepcopy(tmp);
+			if(dfs(k + 1)) return true;
+			deepcopy(tmp, map);
 		}
+		return false;
 	}
 
+	private static int getRemain() {
+		int cnt = 0;
+		for (int i = 0; i < H; i++) {
+			for (int j = 0; j < W; j++) {
+				if (map[i][j] != 0) {
+					cnt++;
+				}
+			}
+		}
+		return cnt;
+	}
+
+	// 계속해서 배열을 생성함 -> 메모리, 시간 낭비
 	private static int[][] deepcopy(int[][] origin) {
 		int[][] ret = new int[H][W];
 		for (int i = 0; i < H; i++) {
 			ret[i] = origin[i].clone();
 		}
 		return ret;
+	}
+	
+	// 기존에 존재하는 배열을 사용
+	private static void deepcopy(int[][] origin, int[][] copied) {
+		for (int i = 0; i < H; i++) {
+			for (int j = 0; j < W; j++) {
+				copied[i][j] = origin[i][j];
+			}
+		}
 	}
 
 	private static void bfs(int x) {
@@ -89,70 +110,77 @@ public class _5656_벽돌깨기 {
 			return; // 시도하지 않기
 
 		Queue<int[]> q = new LinkedList<>();
-
-		q.offer(new int[] { y, x, map[y][x] - 1 });
+		if (map[y][x] > 1)
+			q.offer(new int[] { y, x, map[y][x] - 1 });
+		map[y][x] = 0;
 
 		while (!q.isEmpty()) {
 			int[] p = q.poll();
 			int ny = p[0];
 			int nx = p[1];
 			int range = p[2];
-			
-			map[ny][nx] = 0;
-			visited[ny][nx] = true;
+
+//			visited[ny][nx] = true; // map[ny][nx]를 0으로 변경하므로 이것 자체가 visited역할을 함. 따라서 visited는 없어도됨.
+
+			if (range == 0)
+				continue; // range == 0이면 파급효과가 없으므로 생략해도됨
 
 			for (int d = 0; d < 4; d++) {
 				ny = p[0];
 				nx = p[1];
-				
+
 				for (int r = 0; r < range; r++) {
 					ny += dy[d];
 					nx += dx[d];
-					if (ny < 0 || nx < 0 || ny >= H || nx >= W || map[ny][nx] == 0 || visited[ny][nx])
+					if (ny < 0 || nx < 0 || ny >= H || nx >= W || map[ny][nx] == 0)
 						continue;
-					q.offer(new int[] { ny, nx, map[ny][nx] - 1 });
+
+					if (map[ny][nx] > 1)
+						q.offer(new int[] { ny, nx, map[ny][nx] - 1 });
+
+					map[ny][nx] = 0;
 				}
 			}
 		}
-		
+
 		// 빈 칸 메꾸기
 		fillblank();
 	}
 
-	private static void fillblank() {
+	// 빈 칸 채우기 개선
+	private static void fillblank(){
 		// 모든열의 아래부터 빈칸 찾기
-		for (int i = 0; i < W; i++) {
-			loop: for (int j = H-1; j >= 0; j--) {
-				if(map[j][i] == 0) {
-					// 0이 아닌 블럭을 끝까지 찾기
-					int nj = j;
-					while(true) {
-						nj += dy[0];
-						if(nj < 0) continue loop;
-						if(map[nj][i] != 0) break;
-					}
-					map[j][i] = map[nj][i];
-					map[nj][i] = 0;
+		for (int c = 0; c < W; c++) { // 열고정
+			int r = H - 1;
+			while (r > 0) {
+				if (map[r][c] == 0) {
+					int nr = r - 1; // 직전행
+					while (nr > 0 && map[nr][c] == 0)
+						--nr; // 처음만나는 벽돌 찾기
+					map[r][c] = map[nr][c];
+					map[nr][c] = 0;
 				}
+				--r;
+			}
+		}
+	}
+	
+	// 빈 칸 채우기 더 쉬운 버전
+	private static void fillblank2(){
+		for (int c = 0; c < W; c++) { // 열고정
+			ArrayList<Integer> list = new ArrayList<>();
+			int r;
+			for (r = H-1; r >= 0; r--) { // 0이 아닌 벽돌 발견 시 리스트에 담음
+				if(map[r][c] > 0) {
+					list.add(map[r][c]);
+					map[r][c] = 0;
+				}
+			}
+			r = H;
+			for(int b : list) { // 맨 밑부터 리스트에 담긴 벽돌을 집어넣음
+				map[--r][c] = b;
 			}
 		}
 	}
 
 }
-
-
-/*
-1
-3 10 10
-0 0 0 0 0 0 0 0 0 0
-1 0 1 0 1 0 0 0 0 0
-1 0 3 0 1 1 0 0 0 1
-1 1 1 0 1 2 0 0 0 9
-1 1 4 0 1 1 0 0 1 1
-1 1 4 1 1 1 2 1 1 1
-1 1 5 1 1 1 1 2 1 1
-1 1 6 1 1 1 1 1 2 1
-1 1 1 1 1 1 1 1 1 5
-1 1 7 1 1 1 1 1 1 1 
-
- */
