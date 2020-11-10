@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="id">{{msg}}</div>
+    <script>
+      new Vue({
+        el: '#id',
+        data() {
+          return {
+            msg: 'hello!',
+          };
+        },
+        // life cycle hook
+        // vue 객체가 화면에 추가되기 전. data, method, event 사용 불가
+        beforeCreate() {
+          console.log('before create...' + this.msg);
+        },
+
+        // vue 객체가 생성된 후. data, method, event 사용 가능. vue객체가 화면에 부착은 아직 안된 단계
+        // dom은 접근 불가. 서버로부터 데이터를 받아오는 작업 등을 수행
+        created() {
+          console.log('create...' + this.msg);
+          console.log('create...' + this.$el);
+        },
+
+        // vue 갹체가 화면에 부착이 된 단계. dom은 접근 가능
+        mounted() {
+          console.log('mounted...' + this.msg);
+          console.log('mounted...' + this.$el);
+        },
+
+        // 데이터 변경으로 인한 화면 요소 변경이 완료된 단계. 바뀐 데이터에 접근 가능
+        updated() {
+          console.log('updated...' + this.msg);
+        },
+      });
+    </script>
+  </body>
+</html>

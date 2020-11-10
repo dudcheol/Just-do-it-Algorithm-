@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>v-for test</h1>
+      <ul>
+        <li v-for="(item, i) in books">{{i}}.{{item}}</li>
+      </ul>
+      <hr />
+
+      <ul>
+        <li v-for="(value, key, index) in story">
+          {{index}}.{{key}}:{{value}}
+        </li>
+      </ul>
+      <hr />
+
+      <ul>
+        <li v-for="(story, index) in stories">
+          {{index+1}}.{{story.writer}}:{{story.name}}
+        </li>
+      </ul>
+    </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            books: ['햄릿', '콩쥐팥쥐', '누가 내 치즈를 옮겼을까?'],
+            story: {
+              author: '셰익스피어',
+              title: 'tempest',
+              publisher: 'green house',
+            },
+            stories: [
+              {
+                writer: 'james lee',
+                name: 'good jobs',
+              },
+              {
+                writer: 'billy lee',
+                name: 'happy jobs',
+              },
+              {
+                writer: 'harry lee',
+                name: 'merry jobs',
+              },
+            ],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="EUC-KR" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Insert title here</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <!-- v-model: input, select, textarea -->
+  <body>
+    <div class="container">
+      <h1>calculator</h1>
+      <form class="form-line">
+        <input class="form-control" v-model="num1" />
+        <select class="form-control" v-model="op">
+          <option>+</option>
+          <option>-</option>
+          <option>*</option>
+          <option>/</option>
+        </select>
+        <input class="form-control" v-model="num2" />
+        <h2>result: {{num1}} {{op}} {{num2}}</h2>
+      </form>
+    </div>
+
+    <!--Vue 객체 내용  -->
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: '.container',
+        data() {
+          return {
+            num1: '',
+            op: '+',
+            num2: '',
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

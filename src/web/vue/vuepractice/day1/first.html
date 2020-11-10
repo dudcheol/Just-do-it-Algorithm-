@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- vue 사용을 위한 cdn -->
+  </head>
+  <!-- 실행순서
+        1. 뷰 라이브러리 로딩
+        2. 화면 구성요소 생성(html tag)
+        3. 뷰 인스턴스 생성
+        4. 화면과 뷰 인스턴스 연결
+        5. 화면 전환({{}}에 데이터 주입)
+        6. 사용자 확인
+    -->
+
+  <body>
+    <!-- 1. view : 화면 구성 요소(html tag) -->
+    <div id="app">
+      {{message}} ,
+      <!-- vue 객체가 가지고 있는 데이터를 접근시 사용함 -->
+      {{name}}
+    </div>
+    <hr />
+    <div id="other">{{num}}, {{address}}</div>
+
+    <!-- 2. model : data -->
+    <script>
+      var vm = new Vue({
+        el: '#app', // el : vue객체가 관리할 화면요소
+        data() {
+          // vue 객체가 가지고 있는 데이터. model
+          return {
+            message: 'hello, vue!',
+            name: 'tommy lee',
+          };
+        },
+      }); // 3. vm(view model : view와 model을 연결해서 관리해줌)
+
+      var vm2 = new Vue({
+        el: '#other',
+        data: {
+          num: 123,
+          address: 'seoul',
+        },
+      });
+    </script>
+  </body>
+</html>
