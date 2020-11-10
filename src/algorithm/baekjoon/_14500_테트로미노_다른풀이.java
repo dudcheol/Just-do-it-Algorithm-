@@ -2,7 +2,7 @@ package algorithm.baekjoon;
 import java.io.*;
 import java.util.*;
 
-public class _14500_테트로미노_다른풀이 {
+public class _14500_테트로미노_다른풀이 {
 	static int[] di={-1,0,1,0};//상0,우1,하2,좌3
 	static int[] dj={0,1,0,-1};
 	static int N,M,max;
