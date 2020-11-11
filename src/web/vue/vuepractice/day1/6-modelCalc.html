@@ -10,20 +10,21 @@
     <title>Insert title here</title>
     <script src="https://unpkg.com/vue"></script>
   </head>
-  <!-- v-model: input, select, textarea -->
+  <!-- v-model: input, select, textarea
+  화면요소와 vue객체의 데이터를 양방향 연결시켜 놓을때 -->
   <body>
     <div class="container">
       <h1>calculator</h1>
       <form class="form-line">
-        <input class="form-control" v-model="num1" />
+        <input class="form-control" v-model.number="num1" />
         <select class="form-control" v-model="op">
           <option>+</option>
           <option>-</option>
           <option>*</option>
           <option>/</option>
         </select>
-        <input class="form-control" v-model="num2" />
-        <h2>result: {{num1}} {{op}} {{num2}}</h2>
+        <input class="form-control" v-model.number="num2" />
+        <h2>result: {{num1}} {{op}} {{num2}} = {{ calc() }}</h2>
       </form>
     </div>
 
@@ -33,11 +34,25 @@
         el: '.container',
         data() {
           return {
-            num1: '',
+            num1: 0,
             op: '+',
-            num2: '',
+            num2: 0,
           };
         },
+        methods:{
+          calc(){
+            switch(this.op){
+              case '+':
+                return this.num1 + this.num2;
+              case '-':
+                return this.num1 - this.num2;
+              case '*':
+                return this.num1 * this.num2;
+              case '/':
+                return this.num1 / this.num2;
+            }
+          },
+        }
       });
     </script>
   </body>
