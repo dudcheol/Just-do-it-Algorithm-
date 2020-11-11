@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SSAFY</title>
+    <style>
+      body {
+        background-color: #ffffff;
+      }
+      #second > h2 {
+        margin: auto;
+        padding: 0px;
+        text-align: center;
+        color: blue;
+      }
+      .red {
+        color: red;
+      }
+      #signup-form {
+        width: 70%;
+        height: 200px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+        font-family: serif;
+        font-size: 14px;
+      }
+      #signup-form2 {
+        width: 70%;
+        height: 200px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+        font-family: serif;
+        font-size: 14px;
+        color: red;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body>    
+    <section id="signup_section">
+      <div id="signup_form">
+        <h2>Sign Up Form</h2>
+        <form      id="_formhrm"  action=""  method="post" @submit.prevent="process(id)">
+          <label>
+			  <span class="label">아이디<span class="red">*</span></span></label>
+          <input
+            id="_signId"
+            name="id"
+            type="text"
+            v-model="id"
+            placeholder="아이디를 입력하세요"/><br />
+          <label>
+			  <span class="label">비밀번호<span class="red">*</span>
+			  </span></label>
+          <input
+            id="_signPw"
+            name="pw"
+            type="password"
+            v-model="pw"
+            placeholder="패스워드를 입력하세요"/><br />
+      </label>
+      <hr>
+      <div id="signup_form2">
+        <fieldset>
+          <span v-text="id"></span>
+          <span v-text="pw"></span>        
+        </fieldset>
+      </div>
+
+      <button type="submit">submit</button>
+    </section>
+
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: "#signup_section",
+        data: {
+          id: "",
+          pw: "",         
+        },
+        methods: {
+          process(id){
+            // 유효성 체크
+            if(this.id == ''){
+              alert('id를 입력해 주세요');
+              return;
+            }
+            alert(this.id + '\n' + this.pw);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

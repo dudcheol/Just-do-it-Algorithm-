@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        body{
+            font-size: 30px;
+        }
+        .ten-empa {
+            font-weight: bold;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <button v-on:click="mclick" v-on:mouseover="mover" v-on:mouseleave="mleave">{{msg}}</button>
+        <div :class="empaTen()">{{cnt}}</div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+            cnt:0,
+            msg:'upvote?',
+        },
+        methods: {
+            mclick(){
+                this.cnt++;
+            },
+            empaTen(){
+                if(this.cnt % 10 == 0)
+                    return 'ten-empa';
+                else return '';
+            },
+            mover(){
+                this.msg = 'click!!'
+            },
+            mleave(){
+                this.msg = 'upvote??'
+            }
+        },
+      });
+    </script>
+  </body>
+</html>

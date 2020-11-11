@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	key : <input type="text" id="key" />
+	value : <input type="text" id="value" />
+	<hr>
+	<button id="addBtn">추가</button>
+	<button id="removeBtn">삭제</button>
+	<button id="clearBtn">전체삭제</button>
+	<button id="viewBtn">전체조회</button>
+	<ul id="dataView"></ul>
+	<script>
+		var addBtn = document.querySelector("#addBtn");
+		var delBtn = document.querySelector("#removeBtn");
+		var clearBtn = document.querySelector("#clearBtn");
+		
+		addBtn.onclick = function () {
+			var key = document.querySelector("#key");
+			var value = document.querySelector("#value");
+			localStorage.setItem(key.value, value.value);
+			clear();
+		};
+		delBtn.onclick = function () {
+			var key = document.querySelector("#key");
+			localStorage.removeItem(key.value);
+			clear();
+		};
+		
+		clearBtn.onclick = function () {
+			localStorage.clear();
+		};
+
+		viewBtn.onclick = function () {
+			var liHtml = "";
+			for (var i = 0; i < localStorage.length; i++) {
+				var key = localStorage.key(i);
+				// if(key != 'board'){
+				var value = localStorage.getItem(key);
+				liHtml += "<li>" + value + "</li>";
+				// }
+			}
+			document.querySelector("#dataView").innerHTML = liHtml;
+		};
+
+		function clear(){
+			document.querySelector("#key").value = '';
+			document.querySelector("#value").value = '';
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

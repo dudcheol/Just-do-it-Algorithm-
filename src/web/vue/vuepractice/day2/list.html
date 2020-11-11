@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WS</title>
+     <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<body>
+    <div id="app" class="container">
+        <h2 class="text-center">Vue를 이용한 게시판</h2>
+        <div>
+            <table class="table table-bordered table-condensed">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="50%" />
+                    <col width="15%" />
+                    <col width="25%" />
+                </colgroup>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>날짜</th>
+                </tr>
+               <!-- data-->
+               <template v-for="(b) in boards">
+                   <tr>
+                      <td>{{b.no}}</td> 
+                      <td><a :href="'read.html?no='+b.no">{{b.title}}</a></td>
+                      <!-- <td><a :href="`read.html?no=${board.no}`">{{board.title}}</a></td> -->
+                      <td>{{b.writer}}</td> 
+                      <td>{{b.regtime}}</td> 
+                   </tr>
+               </template>
+            </table>
+        </div>
+        <!-- 게시글이 없는 경우 메세지 -->
+        <h1 v-if="isEmpty()">게시글이 존재하지 않습니다.</h1>
+        <button class="btn btn-primary" @click="goCreate">글쓰기</button>
+    </div>
+    <script>
+        // const boards = [{
+        //         "no": 3,
+        //         "title": "프론트엔드 프레임워크",
+        //         "content": "Vue는 프론트엔드의 인기있는 프레임워크 입니다.",
+        //         "writer": "ssafy",
+        //         "regtime": "2020-05-30"
+        //     },
+        //     {
+        //         "no": 2,
+        //         "title": "Vue를 배워봅시다",
+        //         "content": "Vue와 Spring을 연동하자~",
+        //         "writer": "ssafy",
+        //         "regtime": "2020-05-30"
+        //     },
+        //     {
+        //         "no": 1,
+        //         "title": "Vue Axios 연동",
+        //         "content": "Vue를 이용한 HTTP 통신",
+        //         "writer": "ssafy",
+        //         "regtime": "2020-05-30"
+        //     }
+        // ];
+
+        let temp = {
+            sequence: 0,// 글번호. 새 글번호 만들때 사용  
+            items: [] //나머지 내용
+        };
+
+        temp = JSON.parse(localStorage.getItem('board'));
+        boards = temp.items;
+
+        new Vue({
+            el:'#app',
+            data: {
+                boards: boards,
+            },
+            methods: {
+                isEmpty(){
+                    if(this.boards.length==0)
+                        return true;
+                    else 
+                        return false;
+                },
+                goCreate(){
+                    location.href = './create_sto.html';
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

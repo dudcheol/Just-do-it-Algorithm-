@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- template: 여러개의 html태그를 묶어서 처리할때 사용하는 태그
+        v-for, v-if, component와 함께 사용함.
+        template 태그 안의 내용만 출력되고 template 태그 자체는 화면에 표시되지 않음
+        -->
+      <template v-for="(country) in countries">
+        [<span v-text="country.name"></span>]의 수도는
+        [{{country.capital}}]입니다.
+        <hr />
+      </template>
+      v-if="code"
+
+      <template v-if="code">
+        <h1>싸피로고</h1>
+        <img :src="imgpath" />
+        <hr />
+      </template>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          code: true,
+          imgpath: '../img/ssafylogo.png',
+          countries: [
+            {
+              name: "대한민국",
+              capital: "서울",
+            },
+            {
+              name: "카자흐스탄",
+              capital: "누르술탄",
+            },
+            {
+              name: "모잠비크",
+              capital: "마푸투",
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

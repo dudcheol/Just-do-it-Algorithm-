@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>register</h1>
+        <input type="text" v-model="id">
+        <hr>
+        <h1>
+            {{check()}}
+        </h1>
+
+        <h1 v-if="id == 'tommy'">
+            사용중인 id입니다.
+        </h1>
+        <h1 v-else-if="id == ''">
+            id를 입력해주세요.
+        </h1>
+        <h1 v-else>
+            사용가능 id입니다.
+        </h1>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                id:'',
+            },
+            methods:{
+                check(){
+                    this.id = this.id.trim();
+                    if(this.id.length == 0)
+                        return 'id를 입력해주세요.'
+
+                    if(this.id == 'tommy')
+                        return '사용중인 id입니다.';
+
+                    return '사용가능 id입니다.';
+                }
+            },
+        })
+    </script>
+</body>
+</html>

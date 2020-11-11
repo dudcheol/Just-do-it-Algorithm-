@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>dada's</title>
+
+    <style type="text/css">
+      @import url('./css/shop.css');
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar"></div>
+    <div id="app">
+      <div class="product">
+        <div class="product-image">
+          <!-- 1. 상품 이미지 넣기-->
+          <img :src="image" />
+        </div>
+
+        <div class="product-info">
+          <h1>{{product}}</h1>
+          <!--  2. 상품명 -->
+
+          <!-- 3. inStock 값에 따라 화면에 'In Stock' OR 'Out of Stock' 표시-->
+          <p v-if="inStock">In Stock</p>
+          <p v-else>Out of Stock</p>
+
+          <!-- 4. onSale 값에 따라 화면에 'On Sale!' 표시-->
+          <span v-if="onSale">On Sale!</span>
+
+          <!--  5. 상품설명 -->
+          <p>{{description}}</p>
+
+          <ul>
+            <!--  6. 상품 상세 설명 -->
+            <li v-for="(detail) in details">{{detail}}</li>
+          </ul>
+
+          <!--  7. color-box -->
+          <div
+            v-for="option in options"
+            :key="option.optionId"
+            class="color-box"
+            :style="{background:option.optionColor}"
+            v-on:mouseover="mover(option)"
+          ></div>
+          <hr />
+          <!--  8. button event 처리  -->
+          <button :class="isStock()" @click="add()">Add</button>
+          <button @click="remove()">Remove</button>
+
+          <div class="cart">
+            <!-- 9.카트안의 상품 갯수 표시-->
+            <p>Cart({{cart}})</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      //Create a new button and method to decrement the value of `cart`.
+
+      var app = new Vue({
+        el: '#app',
+        data: {
+          currentProduct: 2234,
+          product: 'Dadas Blouse',
+          image: './img/blueBlouse.jpg',
+          inStock: false,
+          max: 10,
+          onSale: true,
+          description: '올봄 잇아이템',
+
+          details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+          options: [
+            {
+              optionId: 2234,
+              optionColor: 'violet',
+              optionImage: './img/violetBlouse.jpg',
+              optionStock: 0,
+            },
+            {
+              optionId: 2235,
+              optionColor: 'blue',
+              optionImage: './img/blueBlouse.jpg',
+              optionStock: 10,
+            },
+          ],
+
+          cart: 0,
+        },
+        methods: {
+          mover(option) {
+            this.currentProduct = option.optionId;
+            this.inStock = option.optionStock == 0 ? false : true;
+            this.image = option.optionImage;
+          },
+          isStock() {
+            if (this.inStock) return '';
+            else return 'disabledButton';
+          },
+          add() {
+            if (this.inStock) this.cart++;
+          },
+          remove() {
+            if (this.inStock && this.cart > 0) this.cart--;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

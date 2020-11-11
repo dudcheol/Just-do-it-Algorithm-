@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app" class="container">
+    <p>
+      <a href="./list_sto.html">게시판</a>
+    </p>
+
+    <h2 class="text-center">Vue를 이용한 게시판</h2>
+    <div>
+      <div class="form-group">
+        <label for="writer">작성자</label>
+        <input type="text" class="form-control" id="writer" ref="writer" placeholder="작성자를 입력하세요" v-model="writer">
+      </div>
+      <div class="form-group">
+        <label for="title">제목</label>
+        <input type="text" class="form-control" id="title" ref="title" placeholder="제목을 입력하세요" v-model="title">
+      </div>
+      <div class="form-group">
+        <label for="content">내용</label>
+        <textarea type="text" class="form-control" id="contnet" ref="content" placeholder="내용을 입력하세요"
+          v-model="content"></textarea>
+      </div>
+      <div class="text-right">
+        <button class="btn btn-primary" @click="add">등록</button>
+        <button class="btn btn-primary" @click="moveList">목록</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    new Vue({
+      el: '#app',
+      // 폼 화면 입력값과 연관된 데이터 선언하기
+      data: {        
+        no: '',
+        regtime: '',
+        writer: '',
+        title: '',
+        content: '',                
+      },
+
+      methods: {
+        add() {          
+
+          // 새글 담을 데이터 선언
+          let temp = {
+            sequence: 0,// 글번호. 새 글번호 만들때 사용  
+            items: [] //나머지 내용
+          };
+
+
+          //로컬스토리지에 저장된 데이터 가져오기
+          const board = localStorage.getItem('board');         
+
+          // 기존 로컬스토리지에 저장된 내용이 있다면 temp 객체를 변경
+          if (board) {
+            temp = JSON.parse(board);//string->json
+          }
+         
+          // 새글번호 
+          temp.sequence += 1;
+
+          // 화면 입력된 데이터를 temp에 추가
+          temp.items.push({
+            writer: this.writer,
+            title: this.title,
+            content: this.content,
+            no: temp.sequence,
+            regtime: new Date()
+          });
+
+          // 로컬스트리지 저장
+          localStorage.setItem('board', JSON.stringify(temp));
+
+          // 등록 성공 메세지 출력
+          alert('등록이 완료되었습니다.');
+
+          // 목록 페이지로 이동하기
+          location.href = './list.html';
+        },
+        moveList(){
+          location.href = './list.html';
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>
