@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <child-compo :value="msg" :color="color"></child-compo>
+    </div>
+    <script>
+      Vue.component('child-compo', {
+        template: '<p>{{value}}-{{color}}</p>',
+        props: ['value', 'color'], // 부모 컴포넌트로부터 받아올 속성변수
+      });
+
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            msg: '부모가 준 값이야!!!', // 자식에게 전달할 값
+            color: 'red',
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

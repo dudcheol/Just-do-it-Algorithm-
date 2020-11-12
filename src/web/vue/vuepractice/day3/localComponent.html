@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <my-local></my-local>
+    </div>
+    <hr />
+    <div id="app2">
+      <your-local></your-local>
+    </div>
+  </body>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          code: 1234,
+        };
+      },
+      components: {
+        // local component 등록
+        'my-local': {
+          template: '<h1>my dog is amazing!!</h1>',
+        },
+      },
+    });
+
+    var vm2 = new Vue({
+      el: '#app2',
+      components: {
+        'your-local': {
+          template: '<h1>my mac is amazing!!!</h1>',
+        },
+      },
+    });
+  </script>
+</html>

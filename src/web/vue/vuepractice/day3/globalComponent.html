@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <my-story></my-story>
+      <my-story></my-story>
+      <my-story></my-story>
+      <hr />
+      <other-story></other-story>
+    </div>
+  </body>
+
+  <template id="otherstory">
+    <h1>my horse is amazing!!</h1>
+  </template>
+
+  <script>
+    // 전역 컴포넌트 등록
+    //   Vue.component('component-name', {
+    //     // component 내용
+    //   });
+
+    Vue.component('my-story', {
+      template: '<h1>my car is amazing!!! {{num}}-{{model}}</h1>', // component의 화면
+      // 컴포넌트의 데이터지정은 반드시 함수 형식으로 만들고 값을 리턴해줘야 함!!
+      data() {
+        return {
+          num: 1234,
+          model: 'm5',
+        };
+      },
+    });
+
+    Vue.component('other-story', {
+      template: '#otherstory', // component의 화면
+    });
+
+    var vm = new Vue({
+      el: '#app',
+    });
+  </script>
+</html>

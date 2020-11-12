@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>props test</h1>
+      <ul>
+        <my-story v-for="(story) in stories" :story="story"></my-story>
+      </ul>
+    </div>
+
+    <template id="story-template">
+      <li>{{story.writer}} said "{{story.body}}"</li>
+    </template>
+
+    <script>
+      Vue.component('MyStory', {
+        template: '#story-template',
+        props: ['story'], // 부모 컴포넌트로부터 받아올 속성변수
+      });
+
+      new Vue({
+        el: '#app',
+        data: {
+          stories: [
+            {
+              body: 'I crashed my car today!',
+              writer: 'Alex',
+            },
+            {
+              body: 'Yesterday, someone stole my bag!',
+              writer: 'John',
+            },
+            {
+              body: 'Someone ate my chocolate...',
+              writer: 'John',
+            },
+            {
+              body: "I ate someone's chocolate!",
+              writer: 'Alex',
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
