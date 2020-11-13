@@ -1,0 +1,23 @@
+// render: h => h(App) 해석
+// 설명 : render:h => h(App)은 Vue.js의 기본적인 render function의 간소화 버전
+// 변환과정 : #1 -> #2 -> #3 -> #4
+
+// #1
+render: function (createElement) {
+    return createElement(App);
+}
+
+// #2
+render (createElement) {
+    return createElement(App);
+}
+
+// #3
+render (h){
+    return h(App);
+}
+
+// #4
+// 참고 : h는 hyperscript의 약자로 HTML 구조를 생성하는 스크립트를 의미. 
+//Virtual DOM 구현에서 관행적으로 사용
+render: h => h(App);

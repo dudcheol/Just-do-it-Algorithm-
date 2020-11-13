@@ -1,0 +1,11 @@
+1.project 생성
+vue create project-name
+
+2.project 폴더로 이동
+cd project-name
+
+3.서버시작
+npm run serve
+
+4.dependency 설치
+npm install
