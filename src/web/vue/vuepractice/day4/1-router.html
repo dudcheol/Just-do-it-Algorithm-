@@ -1,16 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="app">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Router Sample</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
+  </head>
+  <body>
+    <div id="app">
+      <h1>뷰 라우터 예제</h1>
+      <p>
+      <!-- 1. router-link -->
+      <router-link to="/main">Main component로 이동</router-link>
+      <router-link to="/sub">Sub component로 이동</router-link>
+      </p>
+
+      <!-- 2. router-view 결과가 보여지는 영역-->
+      <router-view></router-view>
     </div>
+
+
     <script>
-        
+      // 3. Main. Sub 컴포넌트 내용 정의
+      var Main = {template: '<div>main 입니다</div>'}
+      var Sub = { template: '<div>sub 입니다</div>' }
+
+      // 4. 뷰 라우터 정의(path-해당컴포넌트 연결정보)
+      var router = new VueRouter({
+        routes:[
+          {path:'/main', component: Main},
+          {path: '/sub', component: Sub}
+        ]
+      });
+
+      // 5. 뷰 라우터를 뷰 인스턴스에 등록
+      new Vue({
+        el:"#app",
+        router:router
+      })
+
+      
     </script>
-</body>
+  </body>
 </html>

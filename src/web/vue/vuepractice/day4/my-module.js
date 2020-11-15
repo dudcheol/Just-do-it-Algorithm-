@@ -1,16 +1,16 @@
-function cube(x) {
-  return x * x;
-}
+ function cube(x) {
+     return x * x ;
+ }
 
-function hello(str) {
-  return 'hello!' + str;
-}
+ function hello(str){
+     return "hello!"+ str;
+ }
 
-var tommy = {
-  name: 'tommy lee',
-  age: 12,
-  address: 'london',
-};
+ var tommy = {
+     name: 'tommy lee',
+     age: 12,
+     address:'london'
+ }; 
 const foo = Math.PI * 2;
 
 //객체
@@ -19,8 +19,8 @@ export { cube, foo, hello, tommy };
 //     return x + 1;
 // }
 
-export default {
-  name: 'jane lee',
-  age: 32,
-  address: 'la',
-};
+export default{
+    name: 'jane lee',
+    age: 32,
+    address:'la'
+}
