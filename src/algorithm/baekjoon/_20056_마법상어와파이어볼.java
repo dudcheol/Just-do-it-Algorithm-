@@ -1,17 +1,18 @@
 package algorithm.baekjoon;
 
 import java.util.*;
+import java.util.Map.Entry;
 import java.io.*;
 
 // m질량, d방향, s속력, rc r행c열
 // 1번부터 시작
 public class _20056_마법상어와파이어볼 {
 
-	static int N, M, K, visited[][];
+	static int N, M, K;
 	static int[] dr = { -1, -1, 0, 1, 1, 1, 0, -1 };
 	static int[] dc = { 0, 1, 1, 1, 0, -1, -1, -1 };
-	static int[][] mergeDir = {{0,2,4,6},{1,3,5,7}};
-	private static Map[][] map;
+	static int[][] mergeDir = { { 0, 2, 4, 6 }, { 1, 3, 5, 7 } };
+	private static HashMap<Integer, ArrayList<Fire>> hs;
 
 	static class Fire {
 		int r;
@@ -27,15 +28,10 @@ public class _20056_마법상어와파이어볼 {
 			this.s = s;
 			this.d = d;
 		}
-	}
-	
-	static class Map{
-		int m;
-		int s;
-		ArrayList<Integer> ds;
-		
-		public Map() {
-			this.ds = new ArrayList<>();
+
+		@Override
+		public String toString() {
+			return "Fire [r=" + r + ", c=" + c + ", m=" + m + ", s=" + s + ", d=" + d + "]";
 		}
 	}
 
@@ -45,103 +41,99 @@ public class _20056_마법상어와파이어볼 {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
-		visited = new int[N][N];
-		map = new Map[N][N];
+		hs = new HashMap<Integer, ArrayList<Fire>>();
 
 		Queue<Fire> q = new LinkedList<>();
-		
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				map[i][j] = new Map();
-			}
-		}
 
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
-			q.offer(new Fire(Integer.parseInt(st.nextToken())-1, Integer.parseInt(st.nextToken())-1,
+			q.offer(new Fire(Integer.parseInt(st.nextToken()) - 1, Integer.parseInt(st.nextToken()) - 1,
 					Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
 					Integer.parseInt(st.nextToken())));
 		}
 
 		while (!q.isEmpty()) {
-			if(K-- == 0) break;
-			initMap();
-			visited = new int[N][N];
-			
-			int size = q.size();
-			while (size-- != 0) {
+			if (K-- == 0)
+				break;
 
+			int size = q.size();
+			hs.clear();
+			while (size-- != 0) {
 				Fire f = q.poll();
 
-				int nr = f.r;
-				int nc = f.c;
-				for (int i = 0; i < f.s; i++) {
-					nr = dirConverter(nr + dr[f.d]);
-					nc = dirConverter(nc + dc[f.d]);
-				}
-				map[nr][nc].m += f.m;
-				map[nr][nc].s += f.s;
-				map[nr][nc].ds.add(f.d);
-				visited[nr][nc]++;
+				int nr = (f.r + dr[f.d]*f.s) % N;
+				int nc = (f.c + dc[f.d]*f.s) % N;
+				if(nr<0)nr = N+nr; // 음수만큼 이동 시 위치찾기 : 이동할 음수값 + 배열의 크기
+				if(nc<0)nc = N+nc;
+
+				// nr,nc를 구하기 위한 작업에서 시간지연 발생!! => 너무 많은 반복문
+//				for (int i = 0; i < f.s; i++) {
+//					nr = dirConverter(nr + dr[f.d]);
+//					nc = dirConverter(nc + dc[f.d]);
+//				}
+
+				int key = nr * N + nc;
+				if(hs.get(key) == null) hs.put(key, new ArrayList<>());
+				hs.get(key).add(new Fire(nr, nc, f.m, f.s, f.d));
 			}
-			
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					Map cur = map[i][j];
-					if(visited[i][j] >= 2) {
-						int m = cur.m/5;
-						if(m==0) continue;
-						int s = cur.s/visited[i][j];
-						int d = 0;
-						int dssize = cur.ds.size();
-						
-						int oddcnt = 0;
-						int evencnt = 0;
-						for (int k = 0; k < dssize; k++) {
-							if(cur.ds.get(k)%2==0) {
-								oddcnt++;
-							}else {
-								evencnt++;
-							}
-						}
-						if(oddcnt != visited[i][j] && evencnt != visited[i][j])
-							d = 1;
-						
-						for (int k = 0; k < 4; k++) {
-							q.offer(new Fire(i,j,m,s,mergeDir[d][k]));
-						}
-					} else if(visited[i][j] == 1) {
-						q.offer(new Fire(i,j,cur.m,cur.s,cur.ds.get(0)));
+
+			for (ArrayList<Fire> cur : hs.values()) {
+				int m = 0;
+				int s = 0;
+				int r = -1;
+				int c = -1;
+				int d = 0;
+				
+				for (Fire f : cur) {
+					m += f.m;
+					s += f.s;
+					r = f.r;
+					c = f.c;
+					d = f.d;
+				}
+				
+				int cnt = cur.size();
+
+				if (cnt >= 2) {
+					m /= 5;
+					if (m == 0)
+						continue;
+					s /= cnt;
+
+					d = 0;
+					int oddcnt = 0;
+					int evencnt = 0;
+					for (Fire f : cur) {
+						if (f.d % 2 == 0) oddcnt++;
+						else evencnt++;
 					}
+					if (oddcnt != cnt && evencnt != cnt)
+						d = 1;
+
+					for (int k = 0; k < 4; k++) {
+						q.offer(new Fire(r, c, m, s, mergeDir[d][k]));
+					}
+				} else if (cnt == 1) {
+					q.offer(cur.get(0));
 				}
 			}
 		}
-		
+
 		int answer = 0;
-		while(!q.isEmpty()) {
+		while (!q.isEmpty()) {
 			answer += q.poll().m;
 		}
 		System.out.println(answer);
 	}
 
 	private static int dirConverter(int d) {
-		if(d<0) {
-			return N-1;
+		if (d < 0) {
+			return N - 1;
 		}
-		if(d>=N) {
-			return d=0;
+		if (d >= N) {
+			return d = 0;
 		}
 		return d;
-	}
-
-	private static void initMap() {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				map[i][j].m = 0;
-				map[i][j].s = 0;
-				map[i][j].ds.clear();
-			}
-		}
 	}
 
 }
