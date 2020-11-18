@@ -1,0 +1,3 @@
+https://fontawesome.com/cheatsheet
+
+https://www.npmjs.com/package/font-awesome
