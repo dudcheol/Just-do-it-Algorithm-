@@ -18,11 +18,21 @@ const store = new Vuex.Store({
     arr: [],
     boardlist: [],
   },
+  // 단순히 값을 가져 가는 것이라서 component안의 computed안에서 사용함.
+  getters:{ // 작업이 된 state값을 돌려줌. param 사용 불가.
+    getTodoList(state){
+      return state.boardlist;
+    },
+    getCounter(state){
+      return state.counter;
+    }
+  },
   actions: {
+    
     // 메소드 형식. 비동기 통신 내용(백엔드 서버와 통신)
     selectAll: (store) => {
       axios
-        .get('/boards')
+        .get('/')
         .then((res) => {
           store.commit('selectAllM', { boardlist: res.data });
         })

@@ -2,28 +2,36 @@
   <div>
     <h1>North world</h1>
     <h3>{{ this.$store.state.message }}</h3>
-    <h3>{{ this.$store.state.counter }}</h3>
+    <h3>{{ getCounter }}</h3>
     <button @click="addCounter">add counter</button>
     <button @click="subCounter">sub counter</button>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
+  computed: {
+    ...mapGetters(['getCounter']),
+  },
   methods: {
+    ...mapActions({
+      subCounter: 'selectAll',
+    }),
     addCounter() {
       // this.$store.state.counter++;
       // mutations 호출. commit으로 호출
-      // this.$store.commit('addCounter');
+      this.$store.commit('addCounter');
       // this.$store.commit('addCounter2', 999); // 파라미터 전달
-      this.$store.commit('addCounter3', {
-        value: 123,
-        arr: ['하이', '헬로우', '안녕하세요'],
-      }); // 파라미터 전달
+      // this.$store.commit('addCounter3', {
+      //   value: 123,
+      //   arr: ['하이', '헬로우', '안녕하세요'],
+      // }); // 파라미터 전달
     },
-    subCounter() {
-      this.$store.commit('subCounter');
-    },
+    // subCounter() {
+    //   this.$store.commit('subCounter');
+    // },
   },
 };
 </script>
