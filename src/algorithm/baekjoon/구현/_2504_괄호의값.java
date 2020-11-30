@@ -18,23 +18,29 @@ public class _2504_괄호의값 {
             }
             else {
                 if(st.isEmpty()) {System.out.println(0); return;}
-                String pop = st.pop();
-                if (pop.equals(cur)){
+                String peek = st.peek();
+                if (peek.equals(cur)){
+                    st.pop();
                     st.push(")".equals(cur) ? "2" : "3");
                 } else {
-                    if(!isNumber(pop)) {System.out.println(0); return;}
-                    int num = Integer.parseInt(pop);
+                    if(!isNumber(peek)) {System.out.println(0); return;}
 
-                    String npop = st.pop();
-
-                    if(!isNumber(npop))
-                        st.push(")".equals(npop) ? Integer.toString(num*2) : Integer.toString(num*3));
-                    else
-                        st.push(Integer.toString(num+Integer.parseInt(npop)));
+                    int res = 0;
+                    while(!st.isEmpty()) {
+                        String npop = st.pop();
+                        if (!isNumber(npop)) {
+                            st.push(")".equals(npop) ? Integer.toString(res * 2) : Integer.toString(res * 3));
+                            break;
+                        }
+                        else
+                            res += Integer.parseInt(npop);
+                    }
                 }
             }
         }
-        System.out.println(st.pop());
+        int answer = 0;
+        while(!st.isEmpty()) answer += Integer.parseInt(st.pop());
+        System.out.println(answer);
     }
 
     private static boolean isNumber(String str) {
