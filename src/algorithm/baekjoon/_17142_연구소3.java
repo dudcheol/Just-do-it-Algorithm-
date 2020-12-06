@@ -8,10 +8,8 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class _17142_연구소3 {
-    private static int N,M,size,min;
-    private static int[][] map;
+    private static int N,M,size,min,total,map[][],selected[];
     private static ArrayList<int[]> virusPos;
-    private static int[] selected;
     private static int[] dy = {-1,1,0,0};
     private static int[] dx = {0,0,-1,1};
     private static boolean[][] visited;
@@ -30,14 +28,11 @@ public class _17142_연구소3 {
                 map[i][j] = Integer.parseInt(st.nextToken());
                 if (map[i][j] == 2){
                     virusPos.add(new int[]{i,j});
-                }
+                } else if (map[i][j] == 0) total++;
             }
         }
         size = virusPos.size();
         selected = new int[M];
-        visited = new boolean[N][N];
-
-        if (check()) { System.out.println(0); return; }
 
         selectVirus(0, 0);
 
@@ -65,8 +60,13 @@ public class _17142_연구소3 {
         }
 
         int res = 0;
-        boolean isOk = false;
-        while(!q.isEmpty()){
+        int cTotal = 0;
+        loop:while(!q.isEmpty()){
+            if (total == cTotal) {
+                min = Math.min(min, res);
+                return;
+            }
+            res++;
             int qSize = q.size();
             while(qSize--!=0) {
                 int[] poll = q.poll();
@@ -76,26 +76,11 @@ public class _17142_연구소3 {
                     int ny = y + dy[d];
                     int nx = x + dx[d];
                     if (ny < 0 || nx < 0 || ny >= N || nx >= N || map[ny][nx] == 1 || visited[ny][nx]) continue;
+                    if (map[ny][nx]==0) cTotal++;
                     visited[ny][nx] = true;
                     q.offer(new int[]{ny, nx});
                 }
             }
-            res++;
-            if (check()) {
-                min = Math.min(min, res);
-                return;
-            }
         }
     }
-
-    private static boolean check() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (map[i][j]==0 && !visited[i][j])
-                    return false;
-            }
-        }
-        return true;
-    }
-
 }
