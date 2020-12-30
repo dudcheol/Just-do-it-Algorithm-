@@ -1,4 +1,4 @@
-package algorithm.jungol;
+package algorithm.jungol.Beginner_Coder.여러가지;
 
 import java.io.BufferedReader;
 import java.io.IOException;
