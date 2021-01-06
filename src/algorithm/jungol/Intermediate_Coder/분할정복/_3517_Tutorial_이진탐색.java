@@ -1,4 +1,4 @@
-package algorithm.jungol.Intermediate_Coder;
+package algorithm.jungol.Intermediate_Coder.분할정복;
 
 import java.io.*;
 import java.util.StringTokenizer;

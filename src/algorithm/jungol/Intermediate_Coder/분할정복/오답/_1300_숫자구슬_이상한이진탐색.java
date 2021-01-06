@@ -1,4 +1,4 @@
-package algorithm.jungol.Intermediate_Coder.오답;
+package algorithm.jungol.Intermediate_Coder.분할정복.오답;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
