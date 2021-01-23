@@ -5,7 +5,7 @@
 
 ## [알고리즘](./src/algorithm)
 
-### 알고리즘 사이트
+### 풀이한 알고리즘 사이트
 
 - [백준](https://www.acmicpc.net/)
 - [프로그래머스](https://programmers.co.kr/)
@@ -30,7 +30,7 @@
 
 ## [웹](./src/web)
 
-- Vue, Ajax, 부트스트랩, jQuery, jsp, jstl ... 등 프론트엔드 기술
+- Vue, Ajax, 부트스트랩, jQuery, jsp, jstl ... 등 프론트엔드 기술 (React 예정)
 - Spring, Spring Boot, MySQL ... 등 백엔드 기술
 - 기타 웹 관련 학습
 
