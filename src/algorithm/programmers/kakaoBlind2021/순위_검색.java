@@ -1,19 +1,20 @@
 package algorithm.programmers.kakaoBlind2021;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class 순위_검색 {
 
     private class Info{
-        String lang;
-        String job;
-        String career;
-        String food;
+        int lang;
+        int job;
+        int career;
+        int food;
         int score;
 
-        public Info(String lang, String job, String career, String food, int score) {
+        public Info(int lang, int job, int career, int food, int score) {
             this.lang = lang;
             this.job = job;
             this.career = career;
@@ -26,30 +27,42 @@ public class 순위_검색 {
         List<Info> list = new ArrayList<>();
         List<Integer> ans = new ArrayList<>();
 
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("cpp", 0);
+        map.put("java", 1);
+        map.put("python", 2);
+        map.put("backend", 3);
+        map.put("frontend", 4);
+        map.put("junior", 5);
+        map.put("senior", 6);
+        map.put("chicken", 7);
+        map.put("pizza", 8);
+        map.put("-", -1);
+
         // info 파싱
         for(String i : info){
             StringTokenizer st = new StringTokenizer(i, " ");
-            list.add(new Info(st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),Integer.parseInt(st.nextToken())));
+            list.add(new Info(map.get(st.nextToken()),map.get(st.nextToken()),map.get(st.nextToken()),map.get(st.nextToken()),Integer.parseInt(st.nextToken())));
         }
 
         // query 파싱
         for (String q : query){
             StringTokenizer st = new StringTokenizer(q, " ");
-            String lang = st.nextToken();
+            int lang = map.get(st.nextToken());
             st.nextToken();
-            String job = st.nextToken();
+            int job = map.get(st.nextToken());
             st.nextToken();
-            String career = st.nextToken();
+            int career = map.get(st.nextToken());
             st.nextToken();
-            String food = st.nextToken();
+            int food = map.get(st.nextToken());
             int score = Integer.parseInt(st.nextToken());
 
             int cnt=0;
             for(Info i : list){
-                if (lang.equals("-") || lang.equals(i.lang)){
-                    if (job.equals("-") || job.equals(i.job)){
-                        if (career.equals("-") || career.equals(i.career)){
-                            if (food.equals("-") || food.equals(i.food)){
+                if (lang<0 || lang==i.lang){
+                    if (job<0 || job==i.job){
+                        if (career<0 || career==i.career){
+                            if (food<0 || food==i.food){
                                 if (i.score >= score){
                                     cnt++;
                                 }
@@ -57,6 +70,17 @@ public class 순위_검색 {
                         }
                     }
                 }
+//                if (lang.equals("-") || lang.equals(i.lang)){
+//                    if (job.equals("-") || job.equals(i.job)){
+//                        if (career.equals("-") || career.equals(i.career)){
+//                            if (food.equals("-") || food.equals(i.food)){
+//                                if (i.score >= score){
+//                                    cnt++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
             ans.add(cnt);
         }
